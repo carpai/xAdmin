@@ -15,8 +15,9 @@ requires = [
     'pyramid_debugtoolbar_ajax',
     'pyramid_debugtoolbar_mongo',
     'waitress',
-    'pymongo',
-    'mongokit_py3'
+    'pymongo==2.8.1',
+    'mongokit',
+    'mongokit-py3'
     ]
 
 setup(name='xAdmin',

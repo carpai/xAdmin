@@ -6,19 +6,19 @@ from mongokit import Document
 class User(Document):
     structure = {
         'name' : str,
-        'agende' : str,
+        'gender' : str,
         'age' : int,
         'height' : float,
     }
 
     validators = {
         'age': lambda x: x > 18,
-        'agende': lambda x: x == 'boy'
+        'gender': lambda x: x == 'boy'
     }
 
     default_values = {
         'age' : 17,
-        'agende': 'girl',
+        'gender': 'girl',
     }
 
     use_dot_notation = True

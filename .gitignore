@@ -1,4 +1,4 @@
 *.pyc
 *.egg-*
-*.idea
+.idea
 build

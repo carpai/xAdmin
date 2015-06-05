@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Quick Tour: {{name}}</title>
+</head>
+<body>
+
+<div>
+    {% if not view.logged_in  %}
+            <a href="{{ request.application_url }}/login">Log In</a>
+    {% else %}
+        logged in as: {{ User }},
+            <a href="{{ request.application_url }}/logout">Logout</a>
+    {% endif %}
+</div>
+
+<h1>Hi {{name}}</h1>
+<p>Visit <a href="{{request.route_url('say')}}">hello</a></p>
+</body>
+</html>

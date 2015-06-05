@@ -17,13 +17,14 @@ requires = [
     'waitress',
     'pymongo==2.8.1',
     'mongokit',
-    'mongokit-py3'
+    'mongokit-py3',
+    'pycrypto'
     ]
 
 setup(name='xAdmin',
       version='0.0',
       description='xAdmin',
-      long_description=README + '\n\n' + CHANGES,
+      long_description=README.md + '\n\n' + CHANGES,
       classifiers=[
         "Programming Language :: Python",
         "Framework :: Pyramid",

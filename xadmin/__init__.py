@@ -2,6 +2,10 @@ from pyramid.config import Configurator
 from pyramid.events import (subscriber, NewRequest)
 from mongokit import Connection
 
+from pyramid.authentication import AuthTktAuthenticationPolicy
+from pyramid.authorization import ACLAuthorizationPolicy
+
+from .security import groupfinder
 
 def main(global_config, **settings):
     """
@@ -27,6 +31,13 @@ def main(global_config, **settings):
 
     # static files
     config.add_static_view('static', 'static', cache_max_age=3600)
+    config.add_static_view('dealerAdmin', 'templates/dealerAdmin/')
+
+    authn_policy = AuthTktAuthenticationPolicy(
+        settings['xadmin.secret'], callback=groupfinder, hashalg='sha512')
+    authz_policy = ACLAuthorizationPolicy()
+    config.set_authentication_policy(authn_policy)
+    config.set_authorization_policy(authz_policy)
 
     #
     # applications

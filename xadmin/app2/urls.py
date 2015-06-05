@@ -3,5 +3,7 @@
 urlpatterns = [
     ['home', '/'],
     ['say', '/saytxt'],
-    ['dict', '/dict']
+    ['dict', '/dict'],
+    ['login', '/login'],
+    ['logout', '/logout']
 ]

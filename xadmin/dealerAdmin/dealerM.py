@@ -1,24 +1,29 @@
 #!/usr/bin/env python3
 
-#import datetime
 from mongokit import Document
 
-class User(Document):
+class Dealer(Document):
     structure = {
-        'name' : str,
-        'gender' : str,
-        'age' : int,
-        'height' : float,
+        'loginstr'       : str,
+        'passwd'         : str,
+        'openid'         : str,
+        'mobile'         : str,
+        'service_time'   : str,
+        # .....
+        'store_name'     : str,
+        'store_addr'     : str,
+        'service_type'   : str,
+        'store_describe' : str,
+        'store_image'    : str,
+        'store_location' : str,
     }
 
     validators = {
-        'age': lambda x: x > 18,
-        'gender': lambda x: x == 'boy'
+        'mobile': lambda x: int(x) > 10000000000,
     }
 
     default_values = {
-        'age' : 17,
-        'gender': 'girl',
+
     }
 
     use_dot_notation = True

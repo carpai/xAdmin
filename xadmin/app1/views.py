@@ -15,37 +15,33 @@ def getUser(self, request):
     usrs = usrtb.User.find()
     return {'Users': list(usrs)}
 
-@view_config(route_name='addusraction')
+@view_config(request_method='POST', route_name='addusraction')
 def addUserAction(self, request):
-    if request.params.has_key('name'):
-        name = request.params.get('name')
-        gender = request.params['gender']
-        age = request.params['age']
-        height = request.params['height']
+    if 'addUsersubmit'in request.params:
+        if request.params.has_key('name'):
+            name = request.params.get('name')
+            gender = request.params['gender']
+            age = request.params['age']
+            height = request.params['height']
 
-        # register 'User' model
-        request.dbconn.register([User])
-        # ready to operation the Usertb
-        usrtb = request.db.Usertb
-        usr = usrtb.User()
-        usr.name = name
-        usr.gender = gender
-        usr.age = int(age)
-        usr.height = float(height)
-        usr.save()
-        return Response(body='User add sucessfull!', content_type='text/plain')
+            # register 'User' model
+            request.dbconn.register([User])
+            # ready to operation the Usertb
+            usrtb = request.db.Usertb
+            usr = usrtb.User()
+            usr.name = name
+            usr.gender = gender
+            usr.age = int(age)
+            usr.height = float(height)
+            usr.save()
+            return Response(body='User add sucessfull!', content_type='text/plain')
+        else:
+            return Response(body='User add failed!', content_type='text/plain')
     else:
-        return Response(body='User add failed!', content_type='text/plain')
+        return Response(body='Server error: No data posted in.', content_type='text/plain')
+
 
 
 @view_config(route_name='addusr', renderer='templates/adduser.jinja2')
 def addUser(self, request):
     return {}
-
-
-
-
-
-
-
-

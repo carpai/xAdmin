@@ -18,7 +18,8 @@ requires = [
     'pymongo==2.8.1',
     'mongokit',
     'mongokit-py3',
-    'pycrypto'
+    'pycrypto',
+    'pyramid_rpc'
     ]
 
 setup(name='xAdmin',

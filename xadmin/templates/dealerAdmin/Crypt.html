@@ -1,0 +1,17 @@
+   
+
+    <script src="third/aes.js"></script>
+    <script src="third/mode-cfb.js"></script>
+    <script src="third/pad-zeropadding.js"></script>
+    <script src="third/core.js"></script>
+    <script src="third/enc-base64.js"></script>
+    <script src="third/Crypt.js"></script>
+
+    <script>
+        mypass = "529325e5cc6b19e36632b6e70c307572";
+        myiv = "bedf68d61bc4c58c";
+
+        console.log(AESEncryptUtf8StrBase64("{name:'规划那个和感觉国际化h', gender: 'boy'}", mypass, myiv));
+        console.log(AESDecryptUtf8StrBase64("kJ65JE2XmPVkdc823Q3NTJxW7V026HMjYICu4wVakyUoocR+VJlQauWy4SzXj1GJOxpxZwrKPXNE6hTTOWbQ/LN2GgTptl2ez8fBr/ormoI=", mypass, myiv));
+
+    </script>

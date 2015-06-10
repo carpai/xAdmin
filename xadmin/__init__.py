@@ -31,7 +31,6 @@ def main(global_config, **settings):
 
     # static files
     config.add_static_view('static', 'static', cache_max_age=3600)
-    config.add_static_view('dealerAdmin', 'templates/dealerAdmin/')
 
     authn_policy = AuthTktAuthenticationPolicy(
         settings['xadmin.secret'], callback=groupfinder, hashalg='sha512')
@@ -54,7 +53,6 @@ def main(global_config, **settings):
         config.scan(package)
 
     # register apps
-    addApp('xadmin.app1')
-    addApp('xadmin.app2')
+    addApp('xadmin.dealerAdmin')
 
     return config.make_wsgi_app()

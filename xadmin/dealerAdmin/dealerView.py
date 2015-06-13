@@ -15,48 +15,56 @@ class Dealer:
     @view_config(route_name='dealer')
     def index(self):
         login_url = self.request.route_url('dealer_login')
-        if not self.logged_in:
+        session = self.request.session
+        if session['loginuser'] == None:
+            print("you're not logged in.")
             return HTTPFound(location=login_url)
         else:
             return {}
 
     @view_config(route_name='dealer_login', renderer='templates/dealerAdmin/login.jinja2')
-    @forbidden_view_config(renderer='static/dealerAdmin/index.jinja2')
     def login(self):
+        return {}
+
+    #@forbidden_view_config(renderer='static/dealerAdmin/index.jinja2')
+    @view_config(route_name='dealer_loginact', renderer='json')
+    def loginAction(self):
         request = self.request
         login_url = request.route_url('dealer_login')
         referer = request.referer
         if (not referer) or (referer == login_url):
-            referer = '/dealerAdmin'
-        came_from = request.params.get('came_from', referer)
+            referer = request.route_url('dealer')
+        # get camefrom from html page settings, if null ,use referer.
+        # came_from = request.params.get('came_from', referer)
+        came_from = referer
         message = ''
         login = ''
         password = ''
         if 'form.login' in request.params:
             print("yeah, this is POST request.")
-            login = request.params['login']
+            login = request.params['username']
             password  = request.params['password']
+            session = request.session
             if USERS.get(login) == password:
                 headers = remember(request, login)
-                return HTTPFound(location = came_from, headers = headers)
-            message = 'Failed on login'
+
+                session['loginuser'] = loginheaders=headers
+                return {'status': '1'}
+            else:
+                session['loginuser'] = None
+                return {'status': '0'}
         else:
-            print("yeah, this is get request.")
-        return dict(
-            name = 'login',
-            message = message,
-            url = request.application_url + '/login',
-            came_from = came_from,
-            login = login,
-            password = password
-        )
+            # error when login
+            print('invalid login post')
+            return {'status': '2'}
+
 
     @view_config(route_name='dealer_logout')
     def logout(self):
-        request = self.request
-        headers = forget(request)
-        url = request.route_url('dealer')
-        return HTTPFound(location=url, headers=headers)
+        session = self.request.session
+        session['loginuser'] = None
+        url = self.request.route_url('dealer')
+        return HTTPFound(url)
 
     @view_config(route_name='dealer_register', renderer='templates/dealerAdmin/register.jinja2')
     def register(self):

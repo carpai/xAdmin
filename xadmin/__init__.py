@@ -1,4 +1,5 @@
 from pyramid.config import Configurator
+from pyramid.session import SignedCookieSessionFactory
 from pyramid.events import (subscriber, NewRequest)
 from mongokit import Connection
 
@@ -12,6 +13,12 @@ def main(global_config, **settings):
         This function returns a Pyramid WSGI application.
     """
     config = Configurator(settings=settings)
+
+    """
+        Session
+    """
+    session_factory = SignedCookieSessionFactory('xadminSessionToken')
+    config.set_session_factory(session_factory)
 
     """
         MongoDB conn
@@ -37,6 +44,10 @@ def main(global_config, **settings):
     authz_policy = ACLAuthorizationPolicy()
     config.set_authentication_policy(authn_policy)
     config.set_authorization_policy(authz_policy)
+
+    # jsonrpc
+    config.include('pyramid_rpc.jsonrpc')
+    config.add_jsonrpc_endpoint('dealerApi', '/dealerApi')
 
     #
     # applications

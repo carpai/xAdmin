@@ -102,7 +102,42 @@ class DealerReq:
             # no a valid registry request
             return {'regstatus': '0'}
 
+    """
+       Content Request Handle
+            ['dealerct_dashboard', '/dealerAdmin/dealerct_dashboard.ct'],
+            ['dealerct_oderman', '/dealerAdmin/dealerct_orderman.ct'],
+            ['dealerct_productman', '/dealerAdmin/dealerct_productman.ct'],
+            ['dealerct_storeinfo', '/dealerAdmin/dealerct_storeinfo.ct'],
+    """
+    @view_config(route_name='dealerct_dashboard', renderer='templates/dealerAdmin/dashboard.jinja2')
+    def dashboard(self):
+        session = self.request.session
+        if session.get('loginuser') != None:
+            return {'header':'欢迎使用三驾马车平台', 'smallheader': '工作面板'}
+        else:
+            return Response('forbidden')
 
+    @view_config(route_name='dealerct_oderman', renderer='templates/dealerAdmin/orderlist.jinja2')
+    def oderlist(self):
+        session = self.request.session
+        if session.get('loginuser') != None:
+            return Response('Not found!')
+        else:
+            return Response('forbidden')
 
+    @view_config(route_name='dealerct_productman', renderer='templates/dealerAdmin/product.jinja2')
+    def product(self):
+        session = self.request.session
+        if session.get('loginuser') != None:
+            return Response('Not found!')
+        else:
+            return Response('forbidden')
 
+    @view_config(route_name='dealerct_storeinfo', renderer='templates/dealerAdmin/storeinfo.jinja2')
+    def store(self):
+        session = self.request.session
+        if session.get('loginuser') != None:
+            return Response('Not found!')
+        else:
+            return Response('forbidden')
 

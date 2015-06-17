@@ -62,3 +62,17 @@
       });
     </script>
 {%- endmacro %}
+
+
+{% macro basic_contentheader(headerstr, smallheaderstr) -%}
+        <section class="content-header">
+          <h1>
+            {{ headerstr }}
+            <small>{{ smallheaderstr }}</small>
+          </h1>
+          <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
+            <li class="active">Here</li>
+          </ol>
+        </section>
+{%- endmacro %}

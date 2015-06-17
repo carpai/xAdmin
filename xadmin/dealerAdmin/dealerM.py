@@ -4,10 +4,12 @@ from mongokit import Document
 
 class Dealer(Document):
     structure = {
-        'loginstr'       : str,
+        'loginame'       : str,
+        'active'         : bool,
         'passwd'         : str,
         'openid'         : str,
         'mobile'         : str,
+        'email'          : str,
         'service_time'   : str,
         # .....
         'store_name'     : str,
@@ -15,7 +17,7 @@ class Dealer(Document):
         'service_type'   : str,
         'store_describe' : str,
         'store_image'    : str,
-        'store_location' : str,
+        'store_location' : str
     }
 
     validators = {

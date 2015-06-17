@@ -13,49 +13,120 @@
       </div><!-- /.login-logo -->
 
       <div class="register-box-body">
-        <p class="login-box-msg">注册会员</p>
-        <form action="register.do" method="post">
+        <p id="msgtxt" class="login-box-msg">请输入注册信息</p>
+        <form>
           <div class="form-group has-feedback">
-            <input type="text" name="regname" class="form-control" placeholder="登录名"/>
+            <input type="text" id="regname" class="form-control" placeholder="登录名"/>
             <span class="glyphicon glyphicon-user form-control-feedback"></span>
           </div>
           <div class="form-group has-feedback">
-            <input type="email" name="regweixin" class="form-control" placeholder="微信号"/>
-            <i class="fa fa-weixin form-control-feedback"></i>
-          </div>
-          <div class="form-group has-feedback">
-            <input type="email" name="regmail" class="form-control" placeholder="邮箱"/>
-            <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
-          </div>
-          <div class="form-group has-feedback">
-            <input type="password" name="regpass" class="form-control" placeholder="密码"/>
+            <input type="password" id="regpass" class="form-control" placeholder="密码"/>
             <span class="glyphicon glyphicon-lock form-control-feedback"></span>
           </div>
           <div class="form-group has-feedback">
-            <input type="password" class="form-control" placeholder="再次确认密码"/>
+            <input type="password" id="regpass2" class="form-control" placeholder="再次确认密码"/>
             <span class="glyphicon glyphicon-log-in form-control-feedback"></span>
+          </div>
+          <div class="form-group has-feedback">
+            <input type="email" id="regmail" class="form-control" placeholder="邮箱"/>
+            <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+          </div>
+          <div class="form-group has-feedback">
+            <input type="text" id="regweixin" class="form-control" placeholder="微信号"/>
+            <i class="fa fa-weixin form-control-feedback"></i>
           </div>
           <div class="row">
             <div class="col-xs-8">    
               <div class="checkbox icheck">
                 <label>
-                  <input type="checkbox"> 我接受 <a href="#3carrigesterm.html">商家入住条款</a>
+                  <input type="checkbox"> 我接受 <a href="#terms.html">商家入住条款</a>
                 </label>
               </div>                        
             </div><!-- /.col -->
             <div class="col-xs-4">
-              <button type="submit" class="btn btn-primary btn-block btn-flat">注册</button>
             </div><!-- /.col -->
           </div>
         </form>        
-
-        <a href="login" class="text-center">喔！我已经有帐号了啊，我要登录</a>
+            <button id="myregbtn" onclick="return registerfn()" class="btn btn-primary btn-block ">注册</button>
+        <a href="login" class="text-center">喔！我已经有帐号了，我要登录</a>
       </div><!-- /.form-box -->
     </div><!-- /.register-box -->
 
-    {% from 'basic.html' import basic_jsfiles, basic_js_icheck %}
+    {% from 'basic.html' import basic_jsfiles, basic_js_icheck, basic_jsonrpc %}
     {{ basic_jsfiles() }}
     {{ basic_js_icheck() }}
+    {{ basic_jsonrpc() }}
+
+    <script>
+      function registerfn ()  {
+          var regname = $("#regname").val();
+          var regweixin = $("#regweixin").val();
+          var regmail = $("#regmail").val();
+          var regpass = $("#regpass").val();
+
+          $.ajax({
+            type:'POST',
+            url: 'register.do',
+            data: {'ajax.register': "", 'regname': regname,
+                   'regweixin': regweixin, 'regmail': regmail, 'regpass': regpass},
+            success: function(data) {
+              if (data.regstatus == 1) {
+                alert("注册成功，将为您跳转到登录页面.");
+                location.href = "/dealerAdmin";
+              }else if (data.regstatus == 2){
+                $("#msgtxt").html('<font color="red">该用户已经注册过了！</font>');
+              }else {
+                $("#msgtxt").html('<font color="red">注册失败，请重新尝试！</font>');
+              }
+            },
+            error: function () {
+              console.log("注册post请求失败!");
+            }
+          });
+      }
+
+      $(document).ready(function(){
+        $.jsonRPC.setup({
+          endPoint: '/dealerApi',
+          namespace: ''
+        });
+      });
+
+      $(".form-control").change( function () {
+         var name = $("#regname").val();
+          if (name == "") {
+            return;
+          }
+         var nameexist = false;
+         $.jsonRPC.request('checkUser', {
+            params: {name: name},
+            success: function(ret) {
+              nameexist = ret.result;
+              msg = "请输入注册信息";
+              if (nameexist) {
+                  msg = '<font color="red">此用户名已经存在！</font>';
+              }else {
+
+              }
+              console.log(nameexist);
+              console.log(msg);
+              $("#msgtxt").html(msg);
+            },
+            error: function(ret) {
+              console.log("checkUser API failed!");
+            }
+         });
+      });
+
+      $("#regmail").focus(function () {
+         var regpass = $("#regpass").val();
+         var regpass2 = $("#regpass2").val();
+         if (regpass != regpass2) {
+            $("#msgtxt").html('<font color="red">两次密码输入不匹配！</font>');
+            $("#regpass2").focus();
+         }
+      });
+    </script>
 
   </body>
 </html>

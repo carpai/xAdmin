@@ -1,22 +1,28 @@
 from pyramid.view import (view_config, view_defaults, forbidden_view_config)
 from pyramid.response import Response
+from pyramid.security import (remember, forget)
 
 from pyramid.httpexceptions import HTTPFound
 
-from pyramid.security import (remember, forget)
-from ..security import  USERS
+from .dealerM import Dealer
+from xadmin.baseSecurity.Utils import sha256HashStr
+
 
 @view_defaults(renderer='templates/dealerAdmin/index.jinja2')
-class Dealer:
+class DealerReq:
     def __init__(self, request):
         self.request = request
-        self.logged_in = request.authenticated_userid
+        # Dealer User table handler
+        self.request.dbconn.register([Dealer])
+        self.dealertb = self.request.db.Dealertb
 
     @view_config(route_name='dealer')
+    @view_config(route_name='dealerslash')
     def index(self):
         login_url = self.request.route_url('dealer_login')
         session = self.request.session
-        if session['loginuser'] == None:
+        print(session)
+        if session.get('loginuser') == None:
             print("you're not logged in.")
             return HTTPFound(location=login_url)
         else:
@@ -30,25 +36,20 @@ class Dealer:
     @view_config(route_name='dealer_loginact', renderer='json')
     def loginAction(self):
         request = self.request
-        login_url = request.route_url('dealer_login')
-        referer = request.referer
-        if (not referer) or (referer == login_url):
-            referer = request.route_url('dealer')
-        # get camefrom from html page settings, if null ,use referer.
-        # came_from = request.params.get('came_from', referer)
-        came_from = referer
-        message = ''
-        login = ''
-        password = ''
-        if 'form.login' in request.params:
+        #login_url = request.route_url('dealer_login')
+
+        if 'ajax.login' in request.params:
             print("yeah, this is POST request.")
             login = request.params['username']
             password  = request.params['password']
             session = request.session
-            if USERS.get(login) == password:
-                headers = remember(request, login)
-
-                session['loginuser'] = loginheaders=headers
+            dealer_this = self.dealertb.Dealer.find_one({'loginame': login})
+            if not dealer_this:
+                return {'status': '2'}
+            if dealer_this.passwd == sha256HashStr(password):
+                #headers = remember(request, login)
+                session['loginuser'] = login
+                # login ok.
                 return {'status': '1'}
             else:
                 session['loginuser'] = None
@@ -69,4 +70,39 @@ class Dealer:
     @view_config(route_name='dealer_register', renderer='templates/dealerAdmin/register.jinja2')
     def register(self):
         return {'hello': 'hello'}
+
+    @view_config(route_name='dealer_registeract', renderer='json')
+    def registerAction(self):
+        print("register post requested!")
+        request = self.request
+        #login_url = request.route_url('dealer_login')
+        #referer = request.referer
+        #if (not referer) or (referer == login_url):
+        #    referer = request.route_url('dealer')
+        if 'ajax.register' in request.params:
+            print("dealer user register request.")
+            username= request.params.get('regname')
+            dealerfd = list(self.dealertb.Dealer.find({'loginame': username}))
+
+            if not dealerfd:
+                # registry ok
+                dealer = self.dealertb.Dealer()
+                dealer.loginame = username
+                dealer.passwd = sha256HashStr(request.params.get('regpass'))
+                dealer.openid = request.params.get('regweixin')
+                dealer.email = request.params.get('regmail')
+                dealer.active = False
+                dealer.save()
+                return {'regstatus': '1'}
+            else:
+                # already registered
+                return {'regstatus': '2'}
+        else:
+            print("It's not a valid register post")
+            # no a valid registry request
+            return {'regstatus': '0'}
+
+
+
+
 

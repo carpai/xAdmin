@@ -60,7 +60,7 @@
           $.ajax({
             type:'POST',
             url: "login.do",
-            data: {'username': name, 'password': pass, 'form.login': "", 'fdfd': ""},
+            data: {'username': name, 'password': pass, 'ajax.login': ""},
             success: function(data) {
               if (data.status == 1) {
                   location.href = "/dealerAdmin";

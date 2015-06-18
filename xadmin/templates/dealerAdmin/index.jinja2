@@ -184,8 +184,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                   <!-- The user image in the menu -->
                   <li class="user-header">
                     <img src="/static/adminlte/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image" />
-                    <p>
-                                            爱车一族 - aichepai
+                    <p>爱车一族 - aichepai
                       <small>三驾马车车龄 ： 5</small>
                     </p>
                   </li>
@@ -238,19 +237,19 @@ scratch. This page gets rid of all links and provides the needed markup only.
           <ul class="sidebar-menu">
             <li class="header">功能区</li>
             <!-- Optionally, you can add icons to the links -->
-            <li class="active"><a href="javascript:void(0);" onclick="javascript:getContent('dashboard');"><i class='fa fa-dashboard'></i> <span>工作面板</span></a></li>
-            <li><a href="javascript:void(0);" onclick="javascript:getContent('orderlist');"><i class='fa fa-cart-arrow-down'></i> <span>订单管理</span></a></li>
-            <li><a href="javascript:void(0);" onclick="javascript:getContent('product');"><i class='fa fa-car'></i> <span>商品管理</span></a></li>
-            <li><a href="javascript:void(0);" onclick="javascript:getContent('appraisement');"><i class='fa fa-users'></i> <span>评价</span></a></li>
+            <li class="active" ctype="dashboard"><a href="javascript:void(0);"><i class='fa fa-dashboard'></i> <span>工作面板</span></a></li>
+            <li ctype="orderlist"><a href="javascript:void(0);"><i class='fa fa-cart-arrow-down'></i> <span>订单管理</span></a></li>
+            <li ctype="product"><a href="javascript:void(0);"><i class='fa fa-car'></i> <span>商品管理</span></a></li>
+            <li ctype="appraisement"><a href="javascript:void(0);"><i class='fa fa-users'></i> <span>评价</span></a></li>
             <li class="treeview">
-              <a href=""><i class='fa fa-bar-chart-o'></i> <span>统计分析</span> <i class="fa fa-angle-left pull-right"></i></a>
+              <a href="javascript:void(0);"><i class='fa fa-bar-chart-o'></i> <span>统计分析</span> <i class="fa fa-angle-left pull-right"></i></a>
               <ul class="treeview-menu">
-                <li><a href="javascript:void(0);" onclick="javascript:getContent('statistics_sell');">销量趋势</a></li>
-                <li><a href="javascript:void(0);" onclick="javascript:getContent('statistics_user');">用户活跃度</a></li>
+                <li ctype="statistics_sell"><a href="javascript:void(0);">销量趋势</a></li>
+                <li ctype="statistics_user"><a href="javascript:void(0);">用户活跃度</a></li>
               </ul>
             </li>
-            <li><a href="javascript:void(0);" onclick="javascript:getContent('storeinfo');"><i class='fa fa-home'></i> <span>门店信息</span></a></li>
-            <li><a href="javascript:void(0);" onclick="javascript:getContent('weixinadmin');"><i class='fa fa-weixin'></i> <span>微信管理</span></a></li>
+            <li ctype="storeinfo"><a href="javascript:void(0);"><i class='fa fa-home'></i> <span>门店信息</span></a></li>
+            <li ctype="weixinadmin"><a href="javascript:void(0);"><i class='fa fa-weixin'></i> <span>微信管理</span></a></li>
           </ul><!-- /.sidebar-menu -->
         </section>
         <!-- /.sidebar -->
@@ -287,7 +286,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <h3 class="control-sidebar-heading">Recent Activity</h3>
             <ul class='control-sidebar-menu'>
               <li>
-                <a href='javascript::;'>
+                <a href='javascript:void(0);'>
                   <i class="menu-icon fa fa-birthday-cake bg-red"></i>
                   <div class="menu-info">
                     <h4 class="control-sidebar-subheading">Langdon's Birthday</h4>
@@ -300,7 +299,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <h3 class="control-sidebar-heading">Tasks Progress</h3> 
             <ul class='control-sidebar-menu'>
               <li>
-                <a href='javascript::;'>               
+                <a href='javascript:void(0);'>
                   <h4 class="control-sidebar-subheading">
                     Custom Template Design
                     <span class="label label-danger pull-right">70%</span>
@@ -349,8 +348,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
           user experience. Slimscroll is required when using the
           fixed layout. -->
   <script>
-      function getContent(content_type) {
-        var uri = '/dealerAdmin/dealerct_' + content_type + '.ct';
+      function getContent(type) {
+        var uri = '/dealerAdmin/dealerct_' + type + '.ct';
         $.ajax({
             type:'GET',
             url: uri,
@@ -364,11 +363,30 @@ scratch. This page gets rid of all links and provides the needed markup only.
         });
       }
 
+      function getContentClick() {
+        var ct_type = $(this).attr("ctype");
+        $(".sidebar-menu").find("li").each(function () {
+          if($(this).attr("ctype") != "undefined") {
+            if(ct_type == $(this).attr("ctype")) {
+              $(this).addClass("active");
+            }else {
+              $(this).removeClass("active");
+            }
+          }
+        });
+        getContent(ct_type);
+      }
 
       $(document).ready(function(){
         $.jsonRPC.setup({
           endPoint: '/dealerApi',
           namespace: ''
+        });
+
+        $(".sidebar-menu").find("li").each(function () {
+          if($(this).attr("ctype") != "undefined") {
+            $(this).click(getContentClick);
+          }
         });
 
         // load default page content.

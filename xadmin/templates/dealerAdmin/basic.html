@@ -65,6 +65,12 @@
 
 
 {% macro basic_contentheader(headerstr, smallheaderstr) -%}
+        <!-- Default Alert Area for messaging user. -->
+        <div id="alertArea" class="alert alert-warning fade in" hidden="true">
+           <a href="#" class="close" data-dismiss="alert"> &times;</a>
+            .......
+        </div>
+
         <section class="content-header">
           <h1>
             {{ headerstr }}
@@ -75,4 +81,6 @@
             <li class="active">Here</li>
           </ol>
         </section>
+
+
 {%- endmacro %}

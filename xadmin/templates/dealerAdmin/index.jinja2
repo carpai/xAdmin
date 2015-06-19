@@ -348,7 +348,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
           user experience. Slimscroll is required when using the
           fixed layout. -->
     <!-- Modal type: modal modal-primary modal-info modal-warning modal-success modal-danger -->
-    <div id="usermodal" class="modal fade modal-primary">
+    <div id="usermodal" class="modal fade modal">
     </div>
 
     <div id="messagemodal" class="modal fade">
@@ -377,80 +377,83 @@ scratch. This page gets rid of all links and provides the needed markup only.
     </div>
 
   <script>
-      function getContent(type) {
-        var uri = '/dealerAdmin/dealerct_' + type + '.ct';
-        $.ajax({
-            type:'GET',
-            url: uri,
-            success: function(html) {
-              $("#page_content").html(html);
-            },
-            error: function () {
-              $("#page_content").html("请求页面内容失败！");
-              console.log("请求地址" + uri + "失败!" );
-            }
-        });
-      }
-
-      function getContentHtml(type) {
-        var uri = '/dealerAdmin/dealerct_' + type + '.ct';
-        $.ajax({
-            type:'GET',
-            url: uri,
-            success: function(html) {
-              return html;
-            },
-            error: function () {
-              return false;
-            }
-        });
-      }
-
-      function getContentClick() {
-        var ct_type = $(this).attr("ctype");
-        $(".sidebar-menu").find("li").each(function () {
-          if($(this).attr("ctype") != "undefined") {
-            if(ct_type == $(this).attr("ctype")) {
-              $(this).addClass("active");
-            }else {
-              $(this).removeClass("active");
-            }
+    function getContentHtml(type, func) {
+      var uri = '/dealerAdmin/dealerct_' + type + '.ct';
+      var _html = undefined;
+      $.ajax({
+          type:'GET',
+          url: uri,
+          success: function(html) {
+            _html = html;
+            func(_html);
+          },
+          error: function () {
+            func(_html);
           }
-        });
-        getContent(ct_type);
-      }
-
-      function errorMoal(title, text) {
-        $("#errormodal_title").html(title);
-        $("#errormodal_text").html(text);
-        $("#errormodal").modal("show");
-      }
-      // Modals action
-      function userInfo() {
-        var _html = getContentHtml('userinfo');
-        if(_html) {
-          $("#usermodal").html(_html);
-          $("#usermodal").modal("show");
-        }else {
-          errorMoal("错误", "请求用户信息失败!");
-        }
-      }
-
-      $(document).ready(function(){
-        $.jsonRPC.setup({
-          endPoint: '/dealerApi',
-          namespace: ''
-        });
-
-        $(".sidebar-menu").find("li").each(function () {
-          if($(this).attr("ctype") != "undefined") {
-            $(this).click(getContentClick);
-          }
-        });
-
-        // load default page content.
-        getContent('dashboard');
       });
+    }
+
+    function setPageContent(_html) {
+      if(_html == undefined) {
+        $("#page_content").html("请求页面内容失败！");
+        //console.log("请求页面" + type + "失败!" );
+      }else {
+        $("#page_content").html(_html);
+      }
+    }
+
+    function getPageContent(type) {
+      getContentHtml(type, setPageContent);
+    }
+
+    function getContentClick() {
+      var ct_type = $(this).attr("ctype");
+      $(".sidebar-menu").find("li").each(function () {
+        if($(this).attr("ctype") != "undefined") {
+          if(ct_type == $(this).attr("ctype")) {
+            $(this).addClass("active");
+          }else {
+            $(this).removeClass("active");
+          }
+        }
+      });
+      getPageContent(ct_type);
+    }
+
+    function errorMoal(title, text) {
+      $("#errormodal_title").html(title);
+      $("#errormodal_text").html(text);
+      $("#errormodal").modal("show");
+    }
+
+    function userInfoUI (_html) {
+      if(_html) {
+        $("#usermodal").html(_html);
+        $("#usermodal").modal("show");
+      }else {
+        errorMoal("错误", "请求用户信息失败!");
+      }
+    }
+    // Modals action
+    function userInfo() {
+      getContentHtml('userinfo', userInfoUI);
+    }
+
+    $(document).ready(function(){
+      $.jsonRPC.setup({
+        endPoint: '/dealerApi',
+        namespace: ''
+      });
+
+      $(".sidebar-menu").find("li").each(function () {
+        if($(this).attr("ctype") != "undefined") {
+          $(this).click(getContentClick);
+        }
+      });
+
+      // load default page content.
+      getPageContent('dashboard');
+    });
   </script>
   </body>
 </html>

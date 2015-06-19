@@ -12,4 +12,5 @@ urlpatterns = [
     ['dealerct_oderman', '/dealerAdmin/dealerct_orderlist.ct'],
     ['dealerct_productman', '/dealerAdmin/dealerct_product.ct'],
     ['dealerct_storeinfo', '/dealerAdmin/dealerct_storeinfo.ct'],
+    ['dealerct_userinfo', '/dealerAdmin/dealerct_userinfo.ct'],
 ]

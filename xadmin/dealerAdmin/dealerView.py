@@ -141,3 +141,11 @@ class DealerReq:
         else:
             return Response('forbidden')
 
+    @view_config(route_name='dealerct_userinfo', renderer='templates/dealerAdmin/userinfo.jinja2')
+    def store(self):
+        session = self.request.session
+        if session.get('loginuser') != None:
+            return {'title': "个人信息配置"}
+        else:
+            return Response('forbidden')
+

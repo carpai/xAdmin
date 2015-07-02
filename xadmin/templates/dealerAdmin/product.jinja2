@@ -1,0 +1,67 @@
+
+<!-- ####################################### PAGE CONTENT #########################################  -->
+        {% from 'basic.html' import basic_contentheader %}
+        {{ basic_contentheader(header, smallheader) }}
+
+        <!-- Main content -->
+        <div class="bootgrid-header container-fluid" id="grid-basic-header">
+            <div class="row">
+                <div class="col-sm-12 actionBar">
+                    <div class="search form-group">
+                        <div class="input-group">
+                            <span class="icon fa input-group-addon fa-search"></span>
+                            <input type="text" placeholder="Search" class="search-field form-control">
+                        </div>
+                    </div>
+                    <div class="actions btn-group">
+                        <div class="dropdown btn-group">
+                            <button data-toggle="dropdown" type="button" class="btn btn-default dropdown-toggle">
+                                <span class="dropdown-text">10</span>
+                                <span class="caret"></span>
+                            </button>
+                            <ul role="menu" class="dropdown-menu pull-right">
+                                <li class="active" aria-selected="true">
+                                    <a class="dropdown-item dropdown-item-button" href="#10">10</a>
+                                </li>
+                                <li aria-selected="false">
+                                    <a class="dropdown-item dropdown-item-button" href="#25">25</a>
+                                </li>
+                                <li aria-selected="false">
+                                    <a class="dropdown-item dropdown-item-button" href="#50">50</a>
+                                </li>
+                                <li aria-selected="false">
+                                    <a class="dropdown-item dropdown-item-button" href="#-1">All</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="dropdown btn-group">
+                            <button data-toggle="dropdown" type="button" class="btn btn-default dropdown-toggle">
+                                <span class="dropdown-text">
+                                    <span class="icon fa fa-th-list"></span>
+                                </span>
+                                <span class="caret"></span>
+                            </button>
+                            <ul role="menu" class="dropdown-menu pull-right">
+                                <li>
+                                    <label class="dropdown-item">
+                                        <input type="checkbox" checked="checked" class="dropdown-item-checkbox" value="1" name="id">
+                                        ID
+                                    </label>
+                                </li>
+                                <li>
+                                    <label class="dropdown-item">
+                                        <input type="checkbox" checked="checked" class="dropdown-item-checkbox" value="1" name="sender">
+                                        Sender
+                                    </label>
+                                </li>
+                                <li>
+                                    <label class="dropdown-item"><input type="checkbox" checked="checked" class="dropdown-item-checkbox" value="1" name="received">
+                                        Received
+                                    </label>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>

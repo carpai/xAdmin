@@ -1,0 +1,203 @@
+<!-- ####################################### PAGE CONTENT #########################################  -->
+{% from 'basic.html' import basic_contentheader %}
+{{ basic_contentheader('门店信息', '浏览与配置店面信息详情') }}
+
+<!-- Main content -->
+<section class="content">
+
+    <div class="nav-tabs-custom">
+        <ul class="nav nav-tabs">
+            <li class="active"><a data-toggle="tab" href="#storetab1">查看</a></li>
+            <li><a data-toggle="tab" href="#storetab2">配置</a></li>
+        </ul>
+        <div class="tab-content">
+            <div id="storetab1" class="tab-pane active">
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">辉达皮套 店面图片</h3>
+                    </div>
+                    <div class="panel-body">
+
+                        <div class="container">
+                            <div class="col-sm-6 col-md-2">
+                                <a href="#" class="thumbnail">
+                                    <img src="/static/adminlte/dist/img/photo1.png"
+                                         alt="缩略图">
+                                </a>
+                            </div>
+                            <div class="col-sm-6 col-md-2">
+                                <a href="#" class="thumbnail">
+                                    <img src="/static/adminlte/dist/img/photo2.png"
+                                         alt="缩略图">
+                                </a>
+                            </div>
+                            <div class="col-sm-6 col-md-2">
+                                <a href="#" class="thumbnail">
+                                    <img src="/static/adminlte/dist/img/photo1.png"
+                                         alt="缩略图">
+                                </a>
+                            </div>
+                            <div class="col-sm-6 col-md-2">
+                                <a href="#" class="thumbnail">
+                                    <img src="/static/adminlte/dist/img/photo2.png"
+                                         alt="缩略图">
+                                </a>
+                            </div>
+                            <div class="col-sm-6 col-md-2">
+                                <a href="#" class="thumbnail">
+                                    <img src="/static/adminlte/dist/img/photo1.png"
+                                         alt="缩略图">
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">店面描述</h3>
+                    </div>
+                    <div class="panel-body">
+                        绵阳辉达汽车真皮座套成立于2009年9月9日，多年来一直致力于生产汽车皮套，缝制真皮或专用皮方向盘套。目前主要为绵阳多家4S店、精品店提供汽车皮套的生产和安装，同时也为一般的客户提供服务。
+                        辉达汇集了行内顶尖优秀人才，部分技术人员曾在广东、浙江的知名汽车座套公司任职，具有近20年丰富经验的制版，缝制及安装技术人员，保证对款式的高品位要求。同时公司引进先进真皮椅套加工设备，实行流水作业，每道工序严格控制；一针一线精工细缝，个性化的色彩搭配，每一处细节都诠释着辉达的先进工艺。
+                        辉达目前拥有员工20人，具有月产500套汽车皮套的产能，当然随着辉达的发展，员工队伍还将不断的壮大。
+                        辉达的产品在每一个生产环节的原材料及辅料控制上，都要求供应商严格按照国家相关标准供货，使辉达生产的产品达到健康、环保无异味的标准。
+                    </div>
+                </div>
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">营业时间</h3>
+                    </div>
+                    <div class="panel-body">
+
+                        <div class="row">
+                            <div class="col-sm-4 col-md-1">
+                                开始时间
+                            </div>
+                            <div class="col-sm-4 col-md-2 input-group clockpicker">
+                                <input type="text" class="form-control" value="09:30">
+                                            <span class="input-group-addon">
+                                                <span class="glyphicon glyphicon-time"></span>
+                                            </span>
+                            </div>
+                            <div class="col-sm-4 col-md-1">
+                                结束时间
+                            </div>
+                            <div class="col-sm-4 col-md-2 input-group clockpicker">
+                                <input type="text" class="form-control" value="21:30">
+                                            <span class="input-group-addon">
+                                                <span class="glyphicon glyphicon-time"></span>
+                                            </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">地址</h3>
+                    </div>
+                    <div class="panel-body">
+                    </div>
+                </div>
+
+            </div>
+            <!-- /.tab-pane -->
+
+            <div id="storetab2" class="tab-pane">
+
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">图片修改与上传</h3>
+                    </div>
+                    <div id="myxxpp" class="panel-body">
+                    </div>
+                </div>
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">描述修改</h3>
+                    </div>
+                    <div class="panel-body">
+                        <form>
+                            <textarea id="storeinfoeditor" placeholder="请输入店面描述"
+                                      style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">地址</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div style="height: 500px" class="col-sm-10 col-md-10" id="map_canvas">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /.tab-pane -->
+        </div>
+        <!-- /.tab-content -->
+    </div>
+
+</section><!-- /.content -->
+
+<script>
+    function PageContentOnLoad() {
+        console.log("calling PageContentOnLoad-Storeinfo");
+        $('.clockpicker').clockpicker();
+        $("#storeinfoeditor").wysihtml5();
+
+        var map = new BMap.Map("map_canvas");
+        map.centerAndZoom(new BMap.Point(104.742516, 31.476818), 12);
+
+        //map.centerAndZoom("绵阳市涪城区",13);
+
+        var top_left_control = new BMap.ScaleControl({anchor: BMAP_ANCHOR_TOP_LEFT});// 左下角，添加比例尺
+        var top_left_navigation = new BMap.NavigationControl();  //左上角，添加默认缩放平移控件
+
+        map.addControl(top_left_control);
+        map.addControl(top_left_navigation);
+        map.addControl(new BMap.MapTypeControl());
+        map.enableScrollWheelZoom();
+        map.enableContinuousZoom();
+
+        var geoc = new BMap.Geocoder();
+
+        //单击获取点击的经纬度
+        map.addEventListener("click", function (e) {
+            map.clearOverlays();
+            alert(e.point.lng + "," + e.point.lat);
+            var marker = new BMap.Marker(e.point);
+            map.addOverlay(marker);
+            //marker.setAnimation(BMAP_ANIMATION_BOUNCE);
+            marker.enableDragging();
+            //var p = marker.getPosition();
+            var opts = {
+                width: 200,     // 信息窗口宽度
+                height: 100,     // 信息窗口高度
+                title: "辉达皮套"  // 信息窗口标题
+            };
+
+            geoc.getLocation(e.point, function (rs) {
+                var addComp = rs.addressComponents;
+                var addresstxt = "您标记的店面地址为：" + addComp.province + ", " + addComp.city + ", "
+                    + addComp.district + ", " + addComp.street + ", " +
+                    "" + addComp.streetNumber;
+                var infoWindow = new BMap.InfoWindow(addresstxt, opts);  // 创建信息窗口对象
+                map.openInfoWindow(infoWindow, e.point); //开启信息窗口
+            });
+        });
+
+        console.log("百度地图已加载");
+
+    }
+</script>
+
+<!-- ####################################### PAGE CONTENT #########################################  -->

@@ -16,6 +16,20 @@ class DealerReq:
         self.request.dbconn.register([Dealer])
         self.dealertb = self.request.db.Dealertb
 
+    def dealerCheckDefault(self, dealer):
+        dealer_this = dealer
+        if not dealer_this.avatar:
+            dealer_this.avatar = "avatar.png"
+        if not dealer_this.mobile:
+            dealer_this.mobile = 'notset'
+        if not dealer_this.email:
+            dealer_this.email = 'notset'
+        if not dealer_this.openid:
+            dealer_this.openid = 'notset'
+        if not dealer_this.nickname:
+             dealer_this.nickname = '三驾马车商家'
+        return dealer_this
+
     @view_config(route_name='dealer')
     @view_config(route_name='dealerslash')
     def index(self):
@@ -26,7 +40,11 @@ class DealerReq:
             print("you're not logged in.")
             return HTTPFound(location=login_url)
         else:
-            return {}
+            currDealer = session.get('loginuser')
+            if currDealer != None:
+                dealer_this = self.dealertb.Dealer.find_one({'loginame': currDealer})
+                dealer_this = self.dealerCheckDefault(dealer_this)
+            return {'User': dealer_this}
 
     @view_config(route_name='dealer_login', renderer='templates/dealerAdmin/login.jinja2')
     def login(self):
@@ -113,7 +131,7 @@ class DealerReq:
     def dashboard(self):
         session = self.request.session
         if session.get('loginuser') != None:
-            return {'header':'欢迎使用三驾马车平台', 'smallheader': '工作面板'}
+            return {}
         else:
             return Response('forbidden')
 
@@ -137,15 +155,20 @@ class DealerReq:
     def store(self):
         session = self.request.session
         if session.get('loginuser') != None:
-            return Response('Not found!')
+            return {}
         else:
             return Response('forbidden')
+
+
 
     @view_config(route_name='dealerct_userinfo', renderer='templates/dealerAdmin/userinfo.jinja2')
     def store(self):
         session = self.request.session
-        if session.get('loginuser') != None:
-            return {'title': "个人信息配置"}
+        currDealer = session.get('loginuser')
+        if currDealer != None:
+            dealer_this = self.dealertb.Dealer.find_one({'loginame': currDealer})
+            dealer_this = self.dealerCheckDefault(dealer_this)
+            return {'title': "个人信息配置", 'User': dealer_this}
         else:
             return Response('forbidden')
 

@@ -4,12 +4,65 @@
             <button aria-label="Close" data-dismiss="modal" class="close" type="button"><span aria-hidden="true">×</span></button>
             <h4 class="modal-title">{{ title }}</h4>
           </div>
-          <div class="modal-body">
-            <p>One fine body…</p>
+          <div class="modal-body" style="background-color: whitesmoke">
+            <form role="form">
+                <div class="text-center">
+                  <img alt="user image" class="img-circle" style="height: 80px" src="/static/adminlte/dist/img/{{ User.avatar }}">
+                  <span><h4>{{ User.nickname }}</h4></span>
+                  <h6>登录名: {{ User.loginame }}</h6>
+                </div>
+
+                <div class="form-group">
+                  <label>更改昵称:</label>
+                  <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                    <input type="text" placeholder="输入新昵称" class="form-control">
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label>邮箱地址:</label>
+                  <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+                    {% if User.email == 'notset' %}
+                    <input type="email" placeholder="{{ User.email }}" class="form-control">
+                    {% else %}
+                    <input type="email" value="{{ User.email }}" class="form-control">
+                    {% endif %}
+                  </div>
+                </div>
+
+                <div class="form-group">
+                    <label>手机号码:</label>
+                    <div class="input-group">
+                      <div class="input-group-addon">
+                        <i class="fa fa-phone"></i>
+                      </div>
+                      {% if User.mobile == 'notset' %}
+                        <input type="text" placeholder="未设置" data-mask="" data-inputmask="'mask': ['+99 999 99999999']" class="form-control">
+                      {% else %}
+                        <input type="text" value="{{ User.mobile }}" data-mask="" data-inputmask="'mask': ['+99 999 99999999']" class="form-control">
+                      {% endif %}
+                    </div><!-- /.input group -->
+                </div>
+
+                <div class="form-group">
+                  <label>微信号:</label>
+                  <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                    {% if User.openid == 'notset' %}
+                    <input type="text" placeholder="未设置" class="form-control">
+                    {% else %}
+                    <input type="text" placeholder="{{ User.openid }}" class="form-control">
+                    {% endif %}
+                  </div>
+                </div>
+
+            </form>
           </div>
-          <div class="modal-footer">
-            <button data-dismiss="modal" class="btn btn-outline pull-left" type="button">取消</button>
-            <button class="btn btn-outline" type="button">保存</button>
+
+          <div class="box-footer">
+            <button class="btn btn-primary">保存</button>
           </div>
         </div><!-- /.modal-content -->
       </div><!-- /.modal-dialog -->

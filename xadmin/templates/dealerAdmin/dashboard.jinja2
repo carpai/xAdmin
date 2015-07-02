@@ -1,6 +1,6 @@
 <!-- ####################################### PAGE CONTENT #########################################  -->
         {% from 'basic.html' import basic_contentheader %}
-        {{ basic_contentheader(header, smallheader) }}
+        {{ basic_contentheader('欢迎使用三驾马车平台', '工作面板') }}
 
         <!-- Main content -->
         <section class="content">
@@ -50,6 +50,12 @@
           </div><!-- /.row -->
 
         </section><!-- /.content -->
-      </div><!-- /.content-wrapper -->
 
+      <script>
+          function PageContentOnLoad() {
+            console.log("calling PageContentOnLoad-Dashboard");
+            //$(".storeinfoeditor").wysihtml5();
+            //$('.clockpicker').clockpicker();
+          }
+      </script>
 <!-- ####################################### PAGE CONTENT #########################################  -->

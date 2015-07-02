@@ -5,11 +5,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
 -->
 <html>
   <head>
-    {% from 'basic.html' import basic_header, basic_css_skin, basic_css_ionicons %}
+    {% from 'basic.html' import basic_header, basic_css_skin, basic_css_ionicons, basic_css_icheck, basic_plugin_clockpicker %}
     {{ basic_header('3.carriges | 商家管理平台') }}
     {{ basic_css_ionicons() }}
+    {{ basic_css_icheck() }}
     {{ basic_css_skin('skin-blue') }}
-
   </head>
   <!--
   BODY TAG OPTIONS:
@@ -38,7 +38,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
       <header class="main-header">
 
         <!-- Logo -->
-        <a href="index" class="logo">
+        <a href="/dealerAdmin" class="logo">
           <!-- mini logo for sidebar mini 50x50 pixels -->
           <span class="logo-mini"><b>3.</b>CRGs</span>
           <!-- logo for regular state and mobile devices -->
@@ -176,20 +176,20 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <!-- Menu Toggle Button -->
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                   <!-- The user image in the navbar-->
-                  <img src="/static/adminlte/dist/img/user2-160x160.jpg" class="user-image" alt="User Image"/>
+                  <img src="/static/adminlte/dist/img/{{ User.avatar }}" class="user-image" alt="User Image"/>
                   <!-- hidden-xs hides the username on small devices so only the image appears. -->
-                  <span class="hidden-xs">爱车一族</span>
+                  <span class="hidden-xs">{{ User.loginame }}</span>
                 </a>
                 <ul class="dropdown-menu">
                   <!-- The user image in the menu -->
                   <li class="user-header">
-                    <img src="/static/adminlte/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image" />
-                    <p>爱车一族 - aichepai
-                      <small>三驾马车车龄 ： 5</small>
-                    </p>
+                    <img src="/static/adminlte/dist/img/{{ User.avatar }}" class="img-circle" alt="User Image" />
+                    <p>{{ User.nickname }}</p>
                   </li>
                   <!-- Menu Body -->
+
                   <li class="user-body">
+                                      <!--
                     <div class="col-xs-4 text-center">
                       <a href="#">Followers</a>
                     </div>
@@ -198,7 +198,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     </div>
                     <div class="col-xs-4 text-center">
                       <a href="#">Friends</a>
-                    </div>
+                    </div>-->
                   </li>
                   <!-- Menu Footer-->
                   <li class="user-footer">
@@ -266,10 +266,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears">  </i></a>
         </div>
         <div class="pull-right hidden-xs">
-            <strong>Copyright &copy; 2015 <a href="#">3.carriages</a>.</strong> All rights reserved.
+            <strong>Copyright &copy; 2015 <a href="#">3.carriages</a></strong> 保留一切权利.
         </div>
           <!-- Default to the left -->
-          Anything you want
+          当前状态
       </footer>
       
       <!-- Control Sidebar -->      
@@ -336,11 +336,15 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
     <!-- REQUIRED JS SCRIPTS -->
 
-    {% from 'basic.html' import basic_jsfiles, basic_jsonrpc%}
+    {% from 'basic.html' import basic_jsfiles, basic_js_icheck, basic_jsonrpc,
+       basic_plugin_html5editor, basic_plugin_clockpicker
+     %}
     {{ basic_jsfiles() }}
     {{ basic_jsonrpc() }}
+    {{ basic_plugin_html5editor() }}
+    {{ basic_plugin_clockpicker() }}
 
-    <!-- AdminLTE App -->
+    <!-- AdminLTE App, KEEP this!!!! -->
     <script src="/static/adminlte/dist/js/app.min.js" type="text/javascript"></script>
 
     <!-- Optionally, you can add Slimscroll and FastClick plugins.
@@ -399,11 +403,17 @@ scratch. This page gets rid of all links and provides the needed markup only.
         //console.log("请求页面" + type + "失败!" );
       }else {
         $("#page_content").html(_html);
+
+        if ($.isFunction(window.PageContentOnLoad)) {
+          PageContentOnLoad();
+        }
       }
     }
 
     function getPageContent(type) {
       getContentHtml(type, setPageContent);
+      //var url = '/dealerAdmin/dealerct_' + type + '.ct';
+      //$("#page_content").load(url);
     }
 
     function getContentClick() {
@@ -417,6 +427,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
           }
         }
       });
+
       getPageContent(ct_type);
     }
 
@@ -454,6 +465,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
       // load default page content.
       getPageContent('dashboard');
     });
+
+
+
+
   </script>
   </body>
 </html>

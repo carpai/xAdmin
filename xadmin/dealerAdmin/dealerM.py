@@ -10,13 +10,16 @@ class Dealer(Document):
         'openid'         : str,
         'mobile'         : str,
         'email'          : str,
-        'service_time'   : str,
+        'avatar'         : str,
+        'nickname'       : str,
+
         # .....
+        'service_time'   : str,
         'store_name'     : str,
         'store_addr'     : str,
         'service_type'   : str,
         'store_describe' : str,
-        'store_image'    : str,
+        'store_image'    : list,
         'store_location' : str
     }
 

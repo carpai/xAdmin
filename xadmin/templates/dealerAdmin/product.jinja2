@@ -1,67 +1,199 @@
-
 <!-- ####################################### PAGE CONTENT #########################################  -->
-        {% from 'basic.html' import basic_contentheader %}
-        {{ basic_contentheader(header, smallheader) }}
+{% from 'basic.html' import basic_contentheader %}
+{{ basic_contentheader(header, smallheader) }}
 
-        <!-- Main content -->
-        <div class="bootgrid-header container-fluid" id="grid-basic-header">
-            <div class="row">
-                <div class="col-sm-12 actionBar">
-                    <div class="search form-group">
-                        <div class="input-group">
-                            <span class="icon fa input-group-addon fa-search"></span>
-                            <input type="text" placeholder="Search" class="search-field form-control">
-                        </div>
+
+<!-- Main content -->
+<section class="content">
+    <div class="nav-tabs-custom">
+        <ul class="nav nav-tabs">
+            <li class="active"><a data-toggle="tab" href="#product-list">商品列表</a></li>
+            <li><a data-toggle="tab" href="#product-add">添加商品</a></li>
+            <li><a data-toggle="tab" herf="#product-del">删除商品</a></li>
+        </ul>
+
+        <div class="tab-content">
+            <div id="product-list" class="tab-pane active">
+                <div class="box">
+                    <div class="box-body">
+                        <table id="example1" class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Rendering engine</th>
+                                    <th>Browser</th>
+                                    <th>Platform(s)</th>
+                                    <th>Engine version</th>
+                                    <th>CSS grade</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Trident</td>
+                                    <td>
+                                        <a href="#">Internet Explorer 4.0</a>
+                                    </td>
+                                    <td>Win 95+</td>
+                                    <td>4</td>
+                                    <td>X</td>
+                                </tr>
+                                <tr>
+                                    <td>Trident</td>
+                                    <td><a href="#">Internet Explorer 5.0</a></td>
+                                    <td>Win 95+</td>
+                                    <td>5</td>
+                                    <td>C</td>
+                                </tr>
+                                <tr>
+                                    <td>Trident</td>
+                                    <td><a href="#">Internet Explorer 5.5</a></td>
+                                    <td>Win 95+</td>
+                                    <td>5.5</td>
+                                    <td>A</td>
+                                </tr>
+                                <tr>
+                                    <td>Trident</td>
+                                    <td><a href="#">Internet Explorer 6</a></td>
+                                    <td>Win 98+</td>
+                                    <td>6</td>
+                                    <td>A</td>
+                                </tr>
+                                <tr>
+                                    <td>Trident</td>
+                                    <td><a href="#">Internet Explorer 7</a></td>
+                                    <td>Win XP SP2+</td>
+                                    <td>7</td>
+                                    <td>A</td>
+                                </tr>
+                                <tr>
+                                    <td>Trident</td>
+                                    <td><a href="#">AOL browser (AOL desktop)</a></td>
+                                    <td>Win XP</td>
+                                    <td>6</td>
+                                    <td>A</td>
+                                </tr>
+                                <tr>
+                                    <td>Gecko</td>
+                                    <td><a href="#">Firefox 1.0</a></td>
+                                    <td>Win 98+ / OSX.2+</td>
+                                    <td>1.7</td>
+                                    <td>A</td>
+                                </tr>
+                                <tr>
+                                    <td>Gecko</td>
+                                    <td><a href="#">Firefox 1.5</a></td>
+                                    <td>Win 98+ / OSX.2+</td>
+                                    <td>1.8</td>
+                                    <td>A</td>
+                                </tr>
+                                <tr>
+                                    <td>Gecko</td>
+                                    <td><a href="#">Firefox 2.0</a></td>
+                                    <td>Win 98+ / OSX.2+</td>
+                                    <td>1.8</td>
+                                    <td>A</td>
+                                </tr>
+                                <tr>
+                                    <td>Gecko</td>
+                                    <td><a href="#">Firefox 3.0</a></td>
+                                    <td>Win 2k+ / OSX.3+</td>
+                                    <td>1.9</td>
+                                    <td>A</td>
+                                </tr>
+                                <tr>
+                                    <td>Gecko</td>
+                                    <td><a href="#">Camino 1.0</a></td>
+                                    <td>OSX.2+</td>
+                                    <td>1.8</td>
+                                    <td>A</td>
+                                </tr>
+                                <tr>
+                                    <td>Gecko</td>
+                                    <td><a href="#">Camino 1.5</a></td>
+                                    <td>OSX.3+</td>
+                                    <td>1.8</td>
+                                    <td>A</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div><!-- /.box-body -->
+                </div><!-- /.box -->
+            </div>
+            <div id="product-add" class="'tab-pane">
+                <section class="content">
+                    <div class="box box-primary">
+                        <form role="form">
+                            <div class="box-body">
+                                <div class="form-group">
+                                    <label>商品名称</label>
+                                    <input type="text" placeholder="商品名称" id="" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label>商品类型</label>
+                                    <select class="form-control">
+                                        <option>洗车</option>
+                                        <option>内饰</option>
+                                        <option>保养</option>
+                                        <option>保险</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>上传商品图片</label>
+                                    <div id="wrapper">
+        <div id="container">
+            <!--头部，相册选择和格式选择-->
+
+            <div id="uploader">
+                <div class="queueList">
+                    <div id="dndArea" class="placeholder">
+                        <div id="filePicker"></div>
+                        <p>或将照片拖到这里，单次最多可选300张</p>
                     </div>
-                    <div class="actions btn-group">
-                        <div class="dropdown btn-group">
-                            <button data-toggle="dropdown" type="button" class="btn btn-default dropdown-toggle">
-                                <span class="dropdown-text">10</span>
-                                <span class="caret"></span>
-                            </button>
-                            <ul role="menu" class="dropdown-menu pull-right">
-                                <li class="active" aria-selected="true">
-                                    <a class="dropdown-item dropdown-item-button" href="#10">10</a>
-                                </li>
-                                <li aria-selected="false">
-                                    <a class="dropdown-item dropdown-item-button" href="#25">25</a>
-                                </li>
-                                <li aria-selected="false">
-                                    <a class="dropdown-item dropdown-item-button" href="#50">50</a>
-                                </li>
-                                <li aria-selected="false">
-                                    <a class="dropdown-item dropdown-item-button" href="#-1">All</a>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="dropdown btn-group">
-                            <button data-toggle="dropdown" type="button" class="btn btn-default dropdown-toggle">
-                                <span class="dropdown-text">
-                                    <span class="icon fa fa-th-list"></span>
-                                </span>
-                                <span class="caret"></span>
-                            </button>
-                            <ul role="menu" class="dropdown-menu pull-right">
-                                <li>
-                                    <label class="dropdown-item">
-                                        <input type="checkbox" checked="checked" class="dropdown-item-checkbox" value="1" name="id">
-                                        ID
-                                    </label>
-                                </li>
-                                <li>
-                                    <label class="dropdown-item">
-                                        <input type="checkbox" checked="checked" class="dropdown-item-checkbox" value="1" name="sender">
-                                        Sender
-                                    </label>
-                                </li>
-                                <li>
-                                    <label class="dropdown-item"><input type="checkbox" checked="checked" class="dropdown-item-checkbox" value="1" name="received">
-                                        Received
-                                    </label>
-                                </li>
-                            </ul>
-                        </div>
+                </div>
+                <div class="statusBar" style="display:none;">
+                    <div class="progress">
+                        <span class="text">0%</span>
+                        <span class="percentage"></span>
+                    </div><div class="info"></div>
+                    <div class="btns">
+                        <div id="filePicker2"></div><div class="uploadBtn">开始上传</div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>商品描述</label>
+                                    <div class="panel-body">
+                                        <form>
+                                            <textarea id="product-info-edit" placeholder="请输入商品信息" style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div><!-- /.box-body -->
+                            <div class="box-footer">
+                                <button class="btn btn-primary" type="submit">Submit</button>
+                            </div>
+                        </form>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+</section><!-- /.content -->
+
+<script>
+    function PageContentOnLoad() {
+        console.log("calling PageContentOnLoad-Product");
+        $('#example1').dataTable();
+        $('#example2').dataTable({
+            "bPaginate": true,
+            "bLengthChange": false,
+            "bFilter": false,
+            "bSort": true,
+            "bInfo": true,
+            "bAutoWidth": false
+        });
+        $("#product-info-edit").wysihtml5();
+    }
+</script>

@@ -147,7 +147,7 @@ class DealerReq:
     def product(self):
         session = self.request.session
         if session.get('loginuser') != None:
-            return Response('Not found!')
+            return {}
         else:
             return Response('forbidden')
 

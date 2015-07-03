@@ -4,7 +4,6 @@
 
 <!-- Main content -->
 <section class="content">
-
     <div class="nav-tabs-custom">
         <ul class="nav nav-tabs">
             <li class="active"><a data-toggle="tab" href="#storetab1">查看</a></li>
@@ -114,6 +113,11 @@
                         <h3 class="panel-title">图片修改与上传</h3>
                     </div>
                     <div id="myxxpp" class="panel-body">
+
+                            <div class="col-sm-12 col-md-12">
+                                <input id="storePicUpload" type="file" accept="image/jpeg, image/png, image/gif" multiple="true">
+                            </div>
+
                     </div>
                 </div>
 
@@ -135,7 +139,7 @@
                     </div>
                     <div class="panel-body">
                         <div class="row">
-                            <div style="height: 500px" class="col-sm-10 col-md-10" id="map_canvas">
+                            <div style="height: 500px" class="col-sm-12 col-md-12" id="map_canvas">
                             </div>
                         </div>
                     </div>
@@ -196,6 +200,27 @@
         });
 
         console.log("百度地图已加载");
+
+        $("#storePicUpload").fileinput({
+            language: "zh",
+            uploadUrl: "/imageupload",
+            initialPreview: [
+                "<img src='/static/adminlte/dist/img/photo1.png' class='file-preview-image' alt='001' title='01'>",
+                "<img src='/static/adminlte/dist/img/photo2.png' class='file-preview-image' alt='002' title='02'>",
+                "<img src='/static/adminlte/dist/img/photo2.png' class='file-preview-image' alt='003' title='03'>",
+                "<img src='/static/adminlte/dist/img/photo2.png' class='file-preview-image' alt='004' title='04'>",
+                "<img src='/static/adminlte/dist/img/photo2.png' class='file-preview-image' alt='005' title='05'>",
+            ],
+
+            overwriteInitial: false,
+            initialCaption: "门店图片上传修改",
+            previewFileType: "image",
+            allowedFileExtensions: ["jpg", "png", "gif", "jpeg"],
+            maxImageWidth: 800,
+            maxImageHeight: 600,
+            minImageWidth: 400,
+            minImageHeight: 300
+        });
 
     }
 </script>

@@ -7,6 +7,8 @@ from pyramid.httpexceptions import HTTPFound
 from .dealerM import Dealer
 from xadmin.baseSecurity.Utils import sha256HashStr
 
+import os, time
+
 
 @view_defaults(renderer='templates/dealerAdmin/index.jinja2')
 class DealerReq:
@@ -154,15 +156,51 @@ class DealerReq:
     @view_config(route_name='dealerct_storeinfo', renderer='templates/dealerAdmin/storeinfo.jinja2')
     def store(self):
         session = self.request.session
-        if session.get('loginuser') != None:
-            return {}
+        currDealer = session.get('loginuser')
+        if currDealer != None:
+            timestamp = str(time.time())
+            dealer_this = self.dealertb.Dealer.find_one({'loginame': currDealer})
+            return {'timestamp': timestamp, 'storeimglist': dealer_this.store_image,
+                    'count': len(dealer_this.store_image)}
+        else:
+            return Response('forbidden')
+
+    @view_config(route_name='dealterct_storepic', renderer='json')
+    def storePicUpload(self):
+        session = self.request.session
+        currDealer = session.get('loginuser')
+        if currDealer != None:
+            if self.request.method == 'POST':
+                images_data = self.request.params
+                counts = len(images_data)
+                for i in range(counts):
+                    img = images_data.getall('file_data')[i]
+                    dealerpic_path = 'xadmin/static/Images/Dealer/%s' % (session.get('loginuser'))
+                    if not os.path.exists(dealerpic_path):
+                        os.makedirs(dealerpic_path, exist_ok=True)
+                    open('%s/%d.jpg' %(dealerpic_path, i), 'wb').write(img.file.read())
+                prev_list = []
+                img_list = []
+                for i in range(counts):
+                    imgurl = "/static/Images/Dealer/" + session.get('loginuser') + "/" + str(i) + ".jpg"
+                    prev_list.append( "<img src='" + imgurl + "?" + str(time.time()) + \
+                                      "' class='file-preview-image' alt='" \
+                                      + str(i) +"' title='" + str(i) + "'>")
+                    img_list.append(imgurl)
+                    #print(img.filename)
+
+                dealer_this = self.dealertb.Dealer.find_one({'loginame': currDealer})
+                dealer_this.store_image = img_list
+                dealer_this.save()
+                return {'initialPreview': prev_list}
+                #return {'error': 'You have faced errors in 4 files.', 'errorkeys': [0, 3, 4, 5]}
         else:
             return Response('forbidden')
 
 
 
     @view_config(route_name='dealerct_userinfo', renderer='templates/dealerAdmin/userinfo.jinja2')
-    def store(self):
+    def userinfo(self):
         session = self.request.session
         currDealer = session.get('loginuser')
         if currDealer != None:

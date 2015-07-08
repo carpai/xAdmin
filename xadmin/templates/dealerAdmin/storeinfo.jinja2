@@ -17,38 +17,14 @@
                         <h3 class="panel-title">辉达皮套 店面图片</h3>
                     </div>
                     <div class="panel-body">
-
-                        <div class="container">
-                            <div class="col-sm-6 col-md-2">
-                                <a href="#" class="thumbnail">
-                                    <img src="/static/adminlte/dist/img/photo1.png"
-                                         alt="缩略图">
-                                </a>
-                            </div>
-                            <div class="col-sm-6 col-md-2">
-                                <a href="#" class="thumbnail">
-                                    <img src="/static/adminlte/dist/img/photo2.png"
-                                         alt="缩略图">
-                                </a>
-                            </div>
-                            <div class="col-sm-6 col-md-2">
-                                <a href="#" class="thumbnail">
-                                    <img src="/static/adminlte/dist/img/photo1.png"
-                                         alt="缩略图">
-                                </a>
-                            </div>
-                            <div class="col-sm-6 col-md-2">
-                                <a href="#" class="thumbnail">
-                                    <img src="/static/adminlte/dist/img/photo2.png"
-                                         alt="缩略图">
-                                </a>
-                            </div>
-                            <div class="col-sm-6 col-md-2">
-                                <a href="#" class="thumbnail">
-                                    <img src="/static/adminlte/dist/img/photo1.png"
-                                         alt="缩略图">
-                                </a>
-                            </div>
+                        <div class="row">
+                            {% for n in storeimglist %}
+                                <div class="col-sm-6 col-md-2">
+                                    <a href="#" class="thumbnail">
+                                        <img src="{{ n }}?{{ timestamp }}" alt="缩略图">
+                                    </a>
+                                </div>
+                            {% endfor %}
                         </div>
                     </div>
                 </div>
@@ -70,25 +46,10 @@
                         <h3 class="panel-title">营业时间</h3>
                     </div>
                     <div class="panel-body">
-
                         <div class="row">
-                            <div class="col-sm-4 col-md-1">
-                                开始时间
-                            </div>
-                            <div class="col-sm-4 col-md-2 input-group clockpicker">
-                                <input type="text" class="form-control" value="09:30">
-                                            <span class="input-group-addon">
-                                                <span class="glyphicon glyphicon-time"></span>
-                                            </span>
-                            </div>
-                            <div class="col-sm-4 col-md-1">
-                                结束时间
-                            </div>
-                            <div class="col-sm-4 col-md-2 input-group clockpicker">
-                                <input type="text" class="form-control" value="21:30">
-                                            <span class="input-group-addon">
-                                                <span class="glyphicon glyphicon-time"></span>
-                                            </span>
+                            <div class="col-sm-4 col-md-3">
+                                开始时间: <b class="text-red">9:30</b> </br>
+                                结束时间: <b class="text-red">20:30</b>
                             </div>
                         </div>
                     </div>
@@ -99,6 +60,9 @@
                         <h3 class="panel-title">地址</h3>
                     </div>
                     <div class="panel-body">
+                        <div class="col-sm-4 col-md-5">
+                            <span class="text-blue"> 绵阳市 高新区 火炬广场旁 </span>
+                        </div>
                     </div>
                 </div>
 
@@ -130,6 +94,38 @@
                             <textarea id="storeinfoeditor" placeholder="请输入店面描述"
                                       style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
                         </form>
+                        <div class="col-sm-1 col-md-1">
+                            <button class="btn btn-block btn-primary">保存</button>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">营业时间设置</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-sm-4 col-md-1">
+                                开始时间
+                            </div>
+                            <div class="col-sm-4 col-md-2 input-group clockpicker">
+                                <input type="text" class="form-control" value="09:30">
+                                            <span class="input-group-addon">
+                                                <span class="glyphicon glyphicon-time"></span>
+                                            </span>
+                            </div>
+                            <div class="col-sm-4 col-md-1">
+                                结束时间
+                            </div>
+                            <div class="col-sm-4 col-md-2 input-group clockpicker">
+                                <input type="text" class="form-control" value="21:30">
+                                            <span class="input-group-addon">
+                                                <span class="glyphicon glyphicon-time"></span>
+                                            </span>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -153,15 +149,51 @@
 </section><!-- /.content -->
 
 <script>
+    function MapMarkPoint(map, point, isanimate) {
+        map.clearOverlays();
+        var marker = new BMap.Marker(point);
+        map.addOverlay(marker);
+        if(isanimate)
+            marker.setAnimation(BMAP_ANIMATION_BOUNCE);
+        marker.enableDragging();
+
+        console.log('坐标为' + point.lng + "," + point.lat);
+    }
+
+    function MapMarkAddr(map, geoc, point, storename) {
+
+        //var p = marker.getPosition();
+        var opts = {
+            width: 200,     // 信息窗口宽度
+            height: 100,     // 信息窗口高度
+            title: "辉达皮套"  // 信息窗口标题
+        };
+
+        geoc.getLocation(point, function (rs) {
+            var addComp = rs.addressComponents;
+            var addresstxt = "您标记的店面地址为：" + addComp.province + ", " + addComp.city + ", "
+                + addComp.district + ", " + addComp.street + ", " +
+                "" + addComp.streetNumber;
+            var infoWindow = new BMap.InfoWindow(addresstxt, opts);  // 创建信息窗口对象
+            map.openInfoWindow(infoWindow, point); //开启信息窗口
+        });
+    }
+
     function PageContentOnLoad() {
         console.log("calling PageContentOnLoad-Storeinfo");
-        $('.clockpicker').clockpicker();
+        $('.clockpicker').clockpicker(
+            {
+                placement: 'top',
+                align: 'right'
+            }
+        );
         $("#storeinfoeditor").wysihtml5();
 
-        var map = new BMap.Map("map_canvas");
-        map.centerAndZoom(new BMap.Point(104.742516, 31.476818), 12);
 
-        //map.centerAndZoom("绵阳市涪城区",13);
+
+        var map = new BMap.Map("map_canvas");
+        map.centerAndZoom(new BMap.Point(104.579959,31.544422), 13);
+        //map.centerAndZoom("绵阳市",13);
 
         var top_left_control = new BMap.ScaleControl({anchor: BMAP_ANCHOR_TOP_LEFT});// 左下角，添加比例尺
         var top_left_navigation = new BMap.NavigationControl();  //左上角，添加默认缩放平移控件
@@ -174,52 +206,42 @@
 
         var geoc = new BMap.Geocoder();
 
+        var curr_point = new BMap.Point(104.753696,31.471069);
+        MapMarkPoint(map, curr_point, true);
+
         //单击获取点击的经纬度
         map.addEventListener("click", function (e) {
-            map.clearOverlays();
-            alert(e.point.lng + "," + e.point.lat);
-            var marker = new BMap.Marker(e.point);
-            map.addOverlay(marker);
-            //marker.setAnimation(BMAP_ANIMATION_BOUNCE);
-            marker.enableDragging();
-            //var p = marker.getPosition();
-            var opts = {
-                width: 200,     // 信息窗口宽度
-                height: 100,     // 信息窗口高度
-                title: "辉达皮套"  // 信息窗口标题
-            };
-
-            geoc.getLocation(e.point, function (rs) {
-                var addComp = rs.addressComponents;
-                var addresstxt = "您标记的店面地址为：" + addComp.province + ", " + addComp.city + ", "
-                    + addComp.district + ", " + addComp.street + ", " +
-                    "" + addComp.streetNumber;
-                var infoWindow = new BMap.InfoWindow(addresstxt, opts);  // 创建信息窗口对象
-                map.openInfoWindow(infoWindow, e.point); //开启信息窗口
-            });
+            MapMarkPoint(map, e.point, false);
+            MapMarkAddr(map, geoc, e.point, '辉达皮套');
         });
 
         console.log("百度地图已加载");
 
         $("#storePicUpload").fileinput({
             language: "zh",
-            uploadUrl: "/imageupload",
-            initialPreview: [
-                "<img src='/static/adminlte/dist/img/photo1.png' class='file-preview-image' alt='001' title='01'>",
-                "<img src='/static/adminlte/dist/img/photo2.png' class='file-preview-image' alt='002' title='02'>",
-                "<img src='/static/adminlte/dist/img/photo2.png' class='file-preview-image' alt='003' title='03'>",
-                "<img src='/static/adminlte/dist/img/photo2.png' class='file-preview-image' alt='004' title='04'>",
-                "<img src='/static/adminlte/dist/img/photo2.png' class='file-preview-image' alt='005' title='05'>",
-            ],
-
-            overwriteInitial: false,
+            uploadUrl: "/dealerAdmin/dealerct_storepic.up",
+            uploadAsync: false,
+            overwriteInitial: true,
+            showUploadedThumbs: false,
             initialCaption: "门店图片上传修改",
             previewFileType: "image",
             allowedFileExtensions: ["jpg", "png", "gif", "jpeg"],
-            maxImageWidth: 800,
-            maxImageHeight: 600,
-            minImageWidth: 400,
-            minImageHeight: 300
+            //maxImageWidth: 800,
+            //maxImageHeight: 600,
+            //minImageWidth: 400,
+            //minImageHeight: 300
+        });
+
+        $("#storePicUpload").on('filebatchuploadsuccess', function (event, data, previewId, index) {
+            console.log("File uploaded!");
+{#                //<img src='/static/Images/Dealer/dbh/0.jpg' class='file-preview-image' alt='0' title='0'></img>#}
+{#                var re = /src=\/?\S+/g;#}
+
+            var all_thumb = $(".thumbnail");
+            for(var j = 0; j < all_thumb.length; j++){
+                var src =  all_thumb.find("img").eq(j).attr("src");
+                all_thumb.find("img").eq(j).attr("src",src+"?" + Date.now());
+            }
         });
 
     }

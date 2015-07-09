@@ -7,6 +7,7 @@ urlpatterns = [
     ['dealer_logout', '/dealerAdmin/logout'],
     ['dealer_register', '/dealerAdmin/register'],
     ['dealer_registeract', '/dealerAdmin/register.do'],
+    ['product_addact','/dealerAdmin/addproduct.do'],
     # content urls
     ['dealerct_dashboard', '/dealerAdmin/dealerct_dashboard.ct'],
     ['dealerct_oderman', '/dealerAdmin/dealerct_orderlist.ct'],

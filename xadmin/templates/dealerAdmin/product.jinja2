@@ -1,192 +1,174 @@
 <!-- ####################################### PAGE CONTENT #########################################  -->
 {% from 'basic.html' import basic_contentheader %}
-{{ basic_contentheader(header, smallheader) }}
+{{ basic_contentheader('商品管理', 'gggg') }}
 
 
 <!-- Main content -->
 <section class="content">
+
     <div class="nav-tabs-custom">
         <ul class="nav nav-tabs">
             <li class="active"><a data-toggle="tab" href="#product-list">商品列表</a></li>
             <li><a data-toggle="tab" href="#product-add">添加商品</a></li>
-            <li><a data-toggle="tab" herf="#product-del">删除商品</a></li>
         </ul>
-
         <div class="tab-content">
             <div id="product-list" class="tab-pane active">
-                <div class="box">
-                    <div class="box-body">
-                        <table id="example1" class="table table-bordered table-striped">
-                            <thead>
-                                <tr>
-                                    <th>Rendering engine</th>
-                                    <th>Browser</th>
-                                    <th>Platform(s)</th>
-                                    <th>Engine version</th>
-                                    <th>CSS grade</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>Trident</td>
-                                    <td>
-                                        <a href="#">Internet Explorer 4.0</a>
-                                    </td>
-                                    <td>Win 95+</td>
-                                    <td>4</td>
-                                    <td>X</td>
-                                </tr>
-                                <tr>
-                                    <td>Trident</td>
-                                    <td><a href="#">Internet Explorer 5.0</a></td>
-                                    <td>Win 95+</td>
-                                    <td>5</td>
-                                    <td>C</td>
-                                </tr>
-                                <tr>
-                                    <td>Trident</td>
-                                    <td><a href="#">Internet Explorer 5.5</a></td>
-                                    <td>Win 95+</td>
-                                    <td>5.5</td>
-                                    <td>A</td>
-                                </tr>
-                                <tr>
-                                    <td>Trident</td>
-                                    <td><a href="#">Internet Explorer 6</a></td>
-                                    <td>Win 98+</td>
-                                    <td>6</td>
-                                    <td>A</td>
-                                </tr>
-                                <tr>
-                                    <td>Trident</td>
-                                    <td><a href="#">Internet Explorer 7</a></td>
-                                    <td>Win XP SP2+</td>
-                                    <td>7</td>
-                                    <td>A</td>
-                                </tr>
-                                <tr>
-                                    <td>Trident</td>
-                                    <td><a href="#">AOL browser (AOL desktop)</a></td>
-                                    <td>Win XP</td>
-                                    <td>6</td>
-                                    <td>A</td>
-                                </tr>
-                                <tr>
-                                    <td>Gecko</td>
-                                    <td><a href="#">Firefox 1.0</a></td>
-                                    <td>Win 98+ / OSX.2+</td>
-                                    <td>1.7</td>
-                                    <td>A</td>
-                                </tr>
-                                <tr>
-                                    <td>Gecko</td>
-                                    <td><a href="#">Firefox 1.5</a></td>
-                                    <td>Win 98+ / OSX.2+</td>
-                                    <td>1.8</td>
-                                    <td>A</td>
-                                </tr>
-                                <tr>
-                                    <td>Gecko</td>
-                                    <td><a href="#">Firefox 2.0</a></td>
-                                    <td>Win 98+ / OSX.2+</td>
-                                    <td>1.8</td>
-                                    <td>A</td>
-                                </tr>
-                                <tr>
-                                    <td>Gecko</td>
-                                    <td><a href="#">Firefox 3.0</a></td>
-                                    <td>Win 2k+ / OSX.3+</td>
-                                    <td>1.9</td>
-                                    <td>A</td>
-                                </tr>
-                                <tr>
-                                    <td>Gecko</td>
-                                    <td><a href="#">Camino 1.0</a></td>
-                                    <td>OSX.2+</td>
-                                    <td>1.8</td>
-                                    <td>A</td>
-                                </tr>
-                                <tr>
-                                    <td>Gecko</td>
-                                    <td><a href="#">Camino 1.5</a></td>
-                                    <td>OSX.3+</td>
-                                    <td>1.8</td>
-                                    <td>A</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div><!-- /.box-body -->
-                </div><!-- /.box -->
+                <table id="example1" class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>商品名称</th>
+                            <th>图片</th>
+                            <th>分类(s)</th>
+                            <th>价格</th>
+                            <th>日期</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for item in product_list %}
+                        <tr>
+                            <td>{{ item.product_name }}</td>
+                            <td>
+                                <a href="#{{ item.dealer_id }}" class="thumbnail">
+                                    <img src={{ item.image }}
+                                    alt="通用的占位符缩略图">
+                                </a>
+                                <!--<a href="#{{ item.images }}">{{ item.dealer_id }}</a>-->
+                            </td>
+                            <td>{{ item.catalog }}</td>
+                            <td>{{ item.price }}</td>
+                            <td>{{ item.date }}</td>
+                            <td></td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
             </div>
-            <div id="product-add" class="'tab-pane">
-                <section class="content">
-                    <div class="box box-primary">
-                        <form role="form">
-                            <div class="box-body">
-                                <div class="form-group">
-                                    <label>商品名称</label>
-                                    <input type="text" placeholder="商品名称" id="" class="form-control">
-                                </div>
-                                <div class="form-group">
-                                    <label>商品类型</label>
-                                    <select class="form-control">
-                                        <option>洗车</option>
-                                        <option>内饰</option>
-                                        <option>保养</option>
-                                        <option>保险</option>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label>上传商品图片</label>
-                                    <div id="wrapper">
-        <div id="container">
-            <!--头部，相册选择和格式选择-->
 
-            <div id="uploader">
-                <div class="queueList">
-                    <div id="dndArea" class="placeholder">
-                        <div id="filePicker"></div>
-                        <p>或将照片拖到这里，单次最多可选300张</p>
-                    </div>
-                </div>
-                <div class="statusBar" style="display:none;">
-                    <div class="progress">
-                        <span class="text">0%</span>
-                        <span class="percentage"></span>
-                    </div><div class="info"></div>
-                    <div class="btns">
-                        <div id="filePicker2"></div><div class="uploadBtn">开始上传</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+            <div id="product-add" class="tab-pane">
+                 <div class="box box-primary">
+                    <form role="form">
+                        <div class="box-body">
+                            <div class="form-group">
+                                <label>商品名称</label>
+                                <input type="text" placeholder="商品名称" id="productname" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label>商品类型</label>
+                                <select class="form-control" id="productcatalog">
+                                    <option>洗车</option>
+                                    <option>内饰</option>
+                                    <option>保养</option>
+                                    <option>保险</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>商品价格</label>
+                                <input type="text" placeholder="商品价格" id="productprice" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label>上线时间</label>
+                                <div>
+                                <input type="text" id="productdate" data-date-format="mm/dd/yy" class="span2">
                                 </div>
-                                <div class="form-group">
-                                    <label>商品描述</label>
-                                    <div class="panel-body">
-                                        <form>
-                                            <textarea id="product-info-edit" placeholder="请输入商品信息" style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
-                                        </form>
+                            </div>
+                            <div class="form-group">
+                                <label>上传商品图片</label>
+                                <div class="panel panel-default">
+                                    <div id="product-info" class="panel-body">
+                                        <div class="col-sm-12 col-md-12">
+                                            <input id="productPicUpload" type="file" accept="image/jpeg, image/png, image/gif" multiple="true">
+                                        </div>
                                     </div>
                                 </div>
-                            </div><!-- /.box-body -->
-                            <div class="box-footer">
-                                <button class="btn btn-primary" type="submit">Submit</button>
                             </div>
-                        </form>
-                    </div>
-                </section>
+                            <div class="form-group">
+                                <label>商品描述</label>
+                                <div class="panel-body">
+                                    <form>
+                                        <textarea id="product-info-edit" placeholder="请输入商品信息" style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
+                                    </form>
+                                </div>
+                            </div>
+                        </div><!-- /.box-body -->
+                        <div class="box-footer">
+                            <button class="btn btn-primary" type="submit" onclick="return addProductfn()">提交</button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
+
+
 </section><!-- /.content -->
 
 <script>
+      function addProductfn ()  {
+          var productname =  $("#productname").val();
+          var productprice = $("#productprice").val();
+          var productdate = $("#productdate").val();
+          var productcatalog = $("#productcatalog").val();
+          var productdiscribe = $("#product-info-edit").val();
+
+          $.ajax({
+            type:'POST',
+            url: 'dealerAdmin/addproduct.do',
+            data: {'ajax.productadd': "", 'productname': productname,
+                   'productprice': productprice, 'productdate': productdate,
+                   'productcatalog': productcatalog, 'productdiscribe':productdiscribe},
+            success: function(data) {
+              if (data.addstatus == 1) {
+                  alert("商品添加成功");
+              }else {
+                  alert("商品添加失败");
+              }
+            },
+            error: function () {
+              console.log("添加商品post请求失败!");
+            }
+          });
+      }
     function PageContentOnLoad() {
         console.log("calling PageContentOnLoad-Product");
-        $('#example1').dataTable();
-        $('#example2').dataTable({
+        $('#example1').dataTable({
+            "aoColumnDefs" : [{
+                "aTargets": [5],
+                "fnCreatedCell" : function(nTd, sData, oData, iRow, iCol){
+                    var a = $('<a class="btn"> <i class="fa fa-edit"></i></a>');
+                    var b = $('<a class="btn"> <i class="fa fa-trash"></i></a>')
+                    a.button();
+                    b.button();
+                    a.on('click',function() {
+
+                        return false;
+                    });
+                    b.on('click',function() {
+                        if (confirm("确认要删除？")) {
+                            $.jsonRPC.request('delProduct', {
+                                params: {name: oData[0]},
+                                success: function(ret) {
+                                    if (ret.result) {
+                                        alert('删除成功');
+                                        location.href = ""
+                                    }else {
+                                        alert('删除失败');
+                                    }
+                                },
+                                error: function(ret) {
+                                    console.log("delProduct API failed!");
+                                }
+                            });
+                        }
+                        return false;
+                    });
+                    $(nTd).empty();
+                    $(nTd).prepend(a);
+                    $(nTd).prepend(b);
+                }
+            }]
+        });
+        $('#example3').dataTable({
             "bPaginate": true,
             "bLengthChange": false,
             "bFilter": false,
@@ -195,5 +177,21 @@
             "bAutoWidth": false
         });
         $("#product-info-edit").wysihtml5();
+        $("#productPicUpload").fileinput({
+            language: "zh",
+            uploadUrl: "/imageupload",
+            initialPreview: [
+            ],
+            overwriteInitial: false,
+            initialCaption: "请上传商品图片",
+            previewFileType: "image",
+            allowedFileExtensions: ["jpg", "png", "gif", "jpeg"],
+            maxImageWidth: 800,
+            maxImageHeight: 600,
+            minImageWidth: 400,
+            minImageHeight: 300
+        });
+        window.prettyPrint && prettyPrint();
+        $('#productdate').datepicker();
     }
 </script>

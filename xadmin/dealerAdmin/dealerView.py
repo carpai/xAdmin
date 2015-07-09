@@ -7,6 +7,7 @@ from pyramid.httpexceptions import HTTPFound
 from .dealerM import Dealer
 from xadmin.baseSecurity.Utils import sha256HashStr
 
+from .productM import Product
 import os, time
 
 
@@ -17,6 +18,9 @@ class DealerReq:
         # Dealer User table handler
         self.request.dbconn.register([Dealer])
         self.dealertb = self.request.db.Dealertb
+
+        self.request.dbconn.register([Product])
+        self.producttb = self.request.db.Producttb
 
     def dealerCheckDefault(self, dealer):
         dealer_this = dealer
@@ -145,11 +149,40 @@ class DealerReq:
         else:
             return Response('forbidden')
 
+    @view_config(route_name='product_addact', renderer='json')
+    def productAddAction(self):
+        print("register post requested!")
+        request = self.request
+
+        if 'ajax.productadd' in request.params:
+            print("dealer user register request.")
+
+            product = self.producttb.Product()
+            product.product_name= request.params.get('productname')
+            product.price = request.params.get('productprice')
+            product.date = request.params.get('productdate')
+            product.catalog = request.params.get('productcatalog')
+            product.images = ''
+            product.dealer_id = ''
+            product.discribe = request.params.get('productdiscribe')
+            product.save()
+            return {'addstatus': '1'}
+        else:
+            print("It's not a valid register post")
+            # no a valid registry request
+            return {'addstatus': '0'}
+
+
     @view_config(route_name='dealerct_productman', renderer='templates/dealerAdmin/product.jinja2')
     def product(self):
         session = self.request.session
         if session.get('loginuser') != None:
-            return {}
+            self.request.dbconn.register([Product])
+            producttb = self.request.db.Producttb
+
+            product_list = list(producttb.Product.find())
+            #print(product_list)
+            return { 'product_list':product_list}
         else:
             return Response('forbidden')
 

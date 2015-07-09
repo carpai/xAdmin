@@ -337,12 +337,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- REQUIRED JS SCRIPTS -->
 
     {% from 'basic.html' import basic_jsfiles, basic_js_icheck, basic_jsonrpc,
-       basic_plugin_html5editor, basic_plugin_clockpicker, basic_plugin_datatables, basic_plugin_bootstrap_fileinput
+       basic_plugin_html5editor, basic_plugin_clockpicker, basic_plugin_datepicker,
+       basic_plugin_datatables, basic_plugin_bootstrap_fileinput
      %}
     {{ basic_jsfiles() }}
     {{ basic_jsonrpc() }}
     {{ basic_plugin_html5editor() }}
     {{ basic_plugin_clockpicker() }}
+    {{ basic_plugin_datepicker() }}
     {{ basic_plugin_bootstrap_fileinput() }}
     {{ basic_plugin_datatables() }}
 

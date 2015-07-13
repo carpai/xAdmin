@@ -50,7 +50,8 @@ class DealerReq:
             if currDealer != None:
                 dealer_this = self.dealertb.Dealer.find_one({'loginame': currDealer})
                 dealer_this = self.dealerCheckDefault(dealer_this)
-            return {'User': dealer_this}
+                store_pic = dealer_this.store_image[0]
+            return {'User': dealer_this, 'StoreShowImg': store_pic}
 
     @view_config(route_name='dealer_login', renderer='templates/dealerAdmin/login.jinja2')
     def login(self):
@@ -194,7 +195,10 @@ class DealerReq:
             timestamp = str(time.time())
             dealer_this = self.dealertb.Dealer.find_one({'loginame': currDealer})
             return {'timestamp': timestamp, 'storeimglist': dealer_this.store_image,
-                    'count': len(dealer_this.store_image)}
+                    'count': len(dealer_this.store_image), 'desc': dealer_this.store_describe,
+                    'servicetime': dealer_this.service_time, 'address': dealer_this.store_addr,
+                    'location': dealer_this.store_location
+                    }
         else:
             return Response('forbidden')
 

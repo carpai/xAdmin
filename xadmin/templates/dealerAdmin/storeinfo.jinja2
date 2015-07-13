@@ -34,10 +34,8 @@
                         <h3 class="panel-title">店面描述</h3>
                     </div>
                     <div class="panel-body">
-                        绵阳辉达汽车真皮座套成立于2009年9月9日，多年来一直致力于生产汽车皮套，缝制真皮或专用皮方向盘套。目前主要为绵阳多家4S店、精品店提供汽车皮套的生产和安装，同时也为一般的客户提供服务。
-                        辉达汇集了行内顶尖优秀人才，部分技术人员曾在广东、浙江的知名汽车座套公司任职，具有近20年丰富经验的制版，缝制及安装技术人员，保证对款式的高品位要求。同时公司引进先进真皮椅套加工设备，实行流水作业，每道工序严格控制；一针一线精工细缝，个性化的色彩搭配，每一处细节都诠释着辉达的先进工艺。
-                        辉达目前拥有员工20人，具有月产500套汽车皮套的产能，当然随着辉达的发展，员工队伍还将不断的壮大。
-                        辉达的产品在每一个生产环节的原材料及辅料控制上，都要求供应商严格按照国家相关标准供货，使辉达生产的产品达到健康、环保无异味的标准。
+                        <div id="descarea" data="{{ desc }}">
+                        </div>
                     </div>
                 </div>
 
@@ -48,8 +46,8 @@
                     <div class="panel-body">
                         <div class="row">
                             <div class="col-sm-4 col-md-3">
-                                开始时间: <b class="text-red">9:30</b> </br>
-                                结束时间: <b class="text-red">20:30</b>
+                                开始时间: <b class="text-red">{{ servicetime[0] }}</b> </br>
+                                结束时间: <b class="text-red">{{ servicetime[1] }}</b>
                             </div>
                         </div>
                     </div>
@@ -61,7 +59,7 @@
                     </div>
                     <div class="panel-body">
                         <div class="col-sm-4 col-md-5">
-                            <span class="text-blue"> 绵阳市 高新区 火炬广场旁 </span>
+                            <span class="text-blue"> {{ address }} </span>
                         </div>
                     </div>
                 </div>
@@ -95,7 +93,7 @@
                                       style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
                         </form>
                         <div class="col-sm-1 col-md-1">
-                            <button class="btn btn-block btn-primary">保存</button>
+                            <button id="descsubmit" class="btn btn-block btn-primary">保存</button>
                         </div>
 
                     </div>
@@ -111,7 +109,7 @@
                                 开始时间
                             </div>
                             <div class="col-sm-4 col-md-2 input-group clockpicker">
-                                <input type="text" class="form-control" value="09:30">
+                                <input id="srvtimestart" type="text" class="form-control" value="{{ servicetime[0] }}">
                                             <span class="input-group-addon">
                                                 <span class="glyphicon glyphicon-time"></span>
                                             </span>
@@ -120,7 +118,7 @@
                                 结束时间
                             </div>
                             <div class="col-sm-4 col-md-2 input-group clockpicker">
-                                <input type="text" class="form-control" value="21:30">
+                                <input id="srvtimeend" type="text" class="form-control" value="{{ servicetime[0] }}">
                                             <span class="input-group-addon">
                                                 <span class="glyphicon glyphicon-time"></span>
                                             </span>
@@ -161,7 +159,6 @@
     }
 
     function MapMarkAddr(map, geoc, point, storename) {
-
         //var p = marker.getPosition();
         var opts = {
             width: 200,     // 信息窗口宽度
@@ -171,27 +168,31 @@
 
         geoc.getLocation(point, function (rs) {
             var addComp = rs.addressComponents;
-            var addresstxt = "您标记的店面地址为：" + addComp.province + ", " + addComp.city + ", "
+            var addresstxt = addComp.province + ", " + addComp.city + ", "
                 + addComp.district + ", " + addComp.street + ", " +
                 "" + addComp.streetNumber;
-            var infoWindow = new BMap.InfoWindow(addresstxt, opts);  // 创建信息窗口对象
+            var infoWindow = new BMap.InfoWindow("您标记的店面地址为：" + addresstxt, opts);  // 创建信息窗口对象
             map.openInfoWindow(infoWindow, point); //开启信息窗口
+            var location_txt = point.lng + ',' + point.lat;
+            $.jsonRPC.request('setStoreLocation', {
+                params: {location: location_txt , addr: addresstxt},
+                success: function(ret) {
+                    if (ret.result) {
+                        console.log("设置店面地址信息ok.");
+                    }else {
+                        console.log("设置店面地址信息err.");
+                    }
+                },
+                error: function(ret) {
+                    console.log("delProduct API(setStoreLocation) failed!");
+                }
+            });
         });
     }
 
-    function PageContentOnLoad() {
-        console.log("calling PageContentOnLoad-Storeinfo");
-        $('.clockpicker').clockpicker(
-            {
-                placement: 'top',
-                align: 'right'
-            }
-        );
-        $("#storeinfoeditor").wysihtml5();
-
-
-
-        var map = new BMap.Map("map_canvas");
+    function LoadBaiduMap()
+    {
+        map = new BMap.Map("map_canvas");
         map.centerAndZoom(new BMap.Point(104.579959,31.544422), 13);
         //map.centerAndZoom("绵阳市",13);
 
@@ -206,7 +207,7 @@
 
         var geoc = new BMap.Geocoder();
 
-        var curr_point = new BMap.Point(104.753696,31.471069);
+        var curr_point = new BMap.Point({{ location }});
         MapMarkPoint(map, curr_point, true);
 
         //单击获取点击的经纬度
@@ -216,6 +217,48 @@
         });
 
         console.log("百度地图已加载");
+    }
+
+    function PageContentOnLoad() {
+
+        // fill description text.
+        var desctxt = $("#descarea").attr("data");
+        $("#descarea").html(desctxt);
+
+        console.log("calling PageContentOnLoad-Storeinfo");
+        $('.clockpicker').clockpicker(
+            {
+                placement: 'top',
+                align: 'right',
+                afterDone: function() {
+                    var clock_s = $('#srvtimestart')[0].value;
+                    var clock_e = $('#srvtimeend')[0].value;
+                    $.jsonRPC.request('setStoreOpeningTime', {
+                        params: {from_t: clock_s,  to_t: clock_e},
+                        success: function(ret) {
+                            if (ret.result) {
+                                console.log("保存店面服务时间OK.");
+                            }else {
+                                console.log("保存店面服务时间-错误.");
+                            }
+                        },
+                        error: function(ret) {
+                            console.log("delProduct API(setStoreOpeningTime) failed!");
+                        }
+                    });
+                }
+            }
+        );
+
+        $("#storeinfoeditor").wysihtml5();
+
+        if(typeof(map) == 'undefined') {
+            LoadBaiduMap();
+        }else {
+            map = null;
+            $("#map_canvas").html("");
+            LoadBaiduMap();
+        }
 
         $("#storePicUpload").fileinput({
             language: "zh",
@@ -237,12 +280,34 @@
 {#                //<img src='/static/Images/Dealer/dbh/0.jpg' class='file-preview-image' alt='0' title='0'></img>#}
 {#                var re = /src=\/?\S+/g;#}
 
+            // refresh images.
             var all_thumb = $(".thumbnail");
             for(var j = 0; j < all_thumb.length; j++){
                 var src =  all_thumb.find("img").eq(j).attr("src");
                 all_thumb.find("img").eq(j).attr("src",src+"?" + Date.now());
             }
         });
+
+        $("#descsubmit").on("click", function(data) {
+            var txt = $("#storeinfoeditor").val();
+            if(txt == "")
+                alert("请输入详细的描述信息再保存!");
+            if (confirm("要保存新的描述信息吗?")) {
+                $.jsonRPC.request('setStoreDescription', {
+                    params: {text: txt},
+                    success: function(ret) {
+                        if (ret.result) {
+                            console.log("保存店面描述信息OK.");
+                        }else {
+                            alert('保存描述信息失败');
+                        }
+                    },
+                    error: function(ret) {
+                        console.log("delProduct API failed!");
+                    }
+                });
+            }
+        })
 
     }
 </script>

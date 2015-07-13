@@ -224,7 +224,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
           <!-- Sidebar user panel (optional) -->
           <div class="user-panel">
             <div class="pull-left image">
-              <img src="/static/adminlte/dist/img/avatar.png"  alt="User Image" />
+              <img src="{{ StoreShowImg }}"  alt="User Image" />
             </div>
             <div class="pull-left info">
               <p>辉达皮套</p>
@@ -407,6 +407,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
         $("#page_content").html("请求页面内容失败！");
         //console.log("请求页面" + type + "失败!" );
       }else {
+        if ($.isFunction(window.PageContentPreLoad)) {
+          PageContentPreLoad();
+        }
+
         $("#page_content").html(_html);
 
         if ($.isFunction(window.PageContentOnLoad)) {

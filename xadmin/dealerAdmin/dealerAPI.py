@@ -29,3 +29,49 @@ def delProduct(self, name):
             product.delete()
             #producttb.Product.delete()
             return True
+
+#
+# Store Info API
+#
+@jsonrpc_method(endpoint='dealerApi')
+def setStoreDescription(self, text):
+    session = self.session
+    currDealer = session.get('loginuser')
+    if currDealer != None:
+        self.dbconn.register([Dealer])
+        dealertb = self.db.Dealertb
+        dealer = dealertb.Dealer.find_one({'loginame': currDealer})
+        dealer.store_describe = text
+        dealer.save()
+        return True
+    else:
+        return False
+
+@jsonrpc_method(endpoint='dealerApi')
+def setStoreOpeningTime(self, from_t, to_t):
+    session = self.session
+    currDealer = session.get('loginuser')
+    if currDealer != None:
+        self.dbconn.register([Dealer])
+        dealertb = self.db.Dealertb
+        dealer = dealertb.Dealer.find_one({'loginame': currDealer})
+        dealer.service_time = [from_t, to_t]
+        dealer.save()
+        return True
+    else:
+        return False
+
+@jsonrpc_method(endpoint='dealerApi')
+def setStoreLocation(self, location, addr):
+    session = self.session
+    currDealer = session.get('loginuser')
+    if currDealer != None:
+        self.dbconn.register([Dealer])
+        dealertb = self.db.Dealertb
+        dealer = dealertb.Dealer.find_one({'loginame': currDealer})
+        dealer.store_location = location
+        dealer.store_addr = addr
+        dealer.save()
+        return True
+    else:
+        return False

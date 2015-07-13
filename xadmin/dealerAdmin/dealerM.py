@@ -14,7 +14,7 @@ class Dealer(Document):
         'nickname'       : str,
 
         # .....
-        'service_time'   : str,
+        'service_time'   : list,
         'store_name'     : str,
         'store_addr'     : str,
         'service_type'   : str,

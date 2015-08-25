@@ -146,7 +146,23 @@ class DealerReq:
     def oderlist(self):
         session = self.request.session
         if session.get('loginuser') != None:
-            return Response('Not found!')
+            return {}
+        else:
+            return Response('forbidden')
+
+    @view_config(route_name='dealerct_cuterate', renderer='templates/dealerAdmin/cuterate.jinja2')
+    def cuterate(self):
+        session = self.request.session
+        if session.get('loginuser') != None:
+            return {}
+        else:
+            return Response('forbidden')
+
+    @view_config(route_name='dealerct_logadmin', renderer='templates/dealerAdmin/logadmin.jinja2')
+    def logadmin(self):
+        session = self.request.session
+        if session.get('loginuser') != None:
+            return {}
         else:
             return Response('forbidden')
 
@@ -233,7 +249,6 @@ class DealerReq:
                 #return {'error': 'You have faced errors in 4 files.', 'errorkeys': [0, 3, 4, 5]}
         else:
             return Response('forbidden')
-
 
 
     @view_config(route_name='dealerct_userinfo', renderer='templates/dealerAdmin/userinfo.jinja2')

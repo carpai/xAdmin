@@ -14,6 +14,8 @@ urlpatterns = [
     ['dealerct_productman', '/dealerAdmin/dealerct_product.ct'],
     ['dealerct_storeinfo', '/dealerAdmin/dealerct_storeinfo.ct'],
     ['dealerct_userinfo', '/dealerAdmin/dealerct_userinfo.ct'],
+    ['dealerct_cuterate', '/dealerAdmin/dealerct_cuterate.ct'],
+    ['dealerct_logadmin', '/dealerAdmin/dealerct_logadmin.ct'],
 
     # upload pics
     ['dealterct_storepic', '/dealerAdmin/dealerct_storepic.up'],

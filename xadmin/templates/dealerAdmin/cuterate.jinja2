@@ -1,0 +1,49 @@
+<!-- ####################################### PAGE CONTENT #########################################  -->
+{% from 'basic.html' import basic_contentheader %}
+{{ basic_contentheader('促销与活动', '管理促销与折扣活动') }}
+
+
+<!-- Main content -->
+<section class="content">
+
+    <div class="nav-tabs-custom">
+        <ul class="nav nav-tabs">
+            <li class="active"><a data-toggle="tab" href="#product-list">最近的活动</a></li>
+            <li><a data-toggle="tab" href="#product-add">新建活动</a></li>
+        </ul>
+        <div class="tab-content">
+            <div id="cuterate-list" class="tab-pane active">
+                <table id="cuteratetb" class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>活动名称</th>
+                            <th>商品</th>
+                            <th>分类</th>
+                            <th>折扣率</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+
+            <div id="cuterate-add" class="tab-pane">
+                 <div class="box box-primary">
+                    <form role="form">
+
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</section><!-- /.content -->
+
+<script>
+
+    function PageContentOnLoad() {
+    }
+</script>

@@ -1,0 +1,66 @@
+<!-- ####################################### PAGE CONTENT #########################################  -->
+{% from 'basic.html' import basic_contentheader %}
+{{ basic_contentheader('订单管理', '查看和处理订单') }}
+
+<!-- Main content -->
+<section class="content">
+    <div class="nav-tabs-custom">
+        <ul class="nav nav-tabs">
+            <li class="active"><a data-toggle="tab" href="#product-list">查看订单</a></li>
+{#            <li><a data-toggle="tab" href="#product-add">添加商品</a></li>#}
+        </ul>
+        <div class="tab-content">
+            <div id="order-list" class="tab-pane active">
+                <table id="orderlisttb" class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>订单编号</th>
+                            <th>用户</th>
+                            <th>商品信息</th>
+                            <th>单位</th>  // 套餐, 多个商品一个订单
+                            <th>数量</th>
+                            <th>价格</th>
+                            <th>支付方式</th>
+                            <th>订单状态</th>
+                            <th>支付时间</th>
+                            <th>创建时间</th>
+                            <th>完成时间</th>
+                            <th>结帐时间</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>0001</td>
+                            <td>dbh</td>
+                            <td>洗车,精洗</td>
+                            <td>次</td>
+                            <td>2</td>
+                            <td>20</td>
+                            <td>网络支付</td>
+                            <td>2015.06.20-8.05</td>
+                            <td>2015.06.20-8.15</td>
+                            <td>已支付</td>
+                            <td>X Y Z</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    function PageContentOnLoad() {
+        //订单操作
+        //只做查询,但是查询条件非常细致.
+
+        // 结帐: 商家增加页面,做汇总,实际支付是微信线上进行,现在小商家考虑周结算,大商家可能月结算.
+        // 爬数据: 增加车型指导价.
+        // 关于订单支付: 为了避免商家玩漏洞, 大宗商品只允许线上支付(或者线上订单下单后线上交定金,线下可现金支付剩余金额), 洗车类就可以现场支付.
+
+        // 日志: 商家产生的结果要产生日志.
+    }
+</script>
+
+<!-- ####################################### PAGE CONTENT #########################################  -->
